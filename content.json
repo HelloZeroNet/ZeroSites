@@ -1,0 +1,53 @@
+{
+ "address": "1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB",
+ "background-color": "#ECF1F5",
+ "description": "Sites of ZeroNet",
+ "files": {
+  "css/all.css": {
+   "sha512": "049fdb8d1f9d7485fbb787fc579b1705534ea2edc92c1d2573521a469b2da4fa",
+   "size": 115082
+  },
+  "dbschema.json": {
+   "sha512": "95dee8798b26d729501eb473f6ec9c6802b468c2e3415de0a3c820723a9c5560",
+   "size": 1914
+  },
+  "img/logo.png": {
+   "sha512": "1b9bf2d0fc7917335b698c0f2a3f902a86b5a9a917a945bbaa04bc82f2a8645f",
+   "size": 2383
+  },
+  "index.html": {
+   "sha512": "93b18936de9ba27dffd71ef735eef3abe65a02cc17acaf21dd66f7074570b331",
+   "size": 563
+  },
+  "js/all.js": {
+   "sha512": "661d281465aa01ca5c869228e89d8e379a7059c65b8f4b60084df11d41d81a3b",
+   "size": 95489
+  }
+ },
+ "ignore": "((js|css)/(?!all.(js|css))|data/.*)",
+ "includes": {
+  "data/users/content.json": {
+   "signers": [],
+   "signers_required": 1
+  }
+ },
+ "inner_path": "content.json",
+ "modified": 1496436487,
+ "postmessage_nonce_security": true,
+ "settings": {
+  "categories": [
+   [1, "Forums, Boards"],
+   [2, "Blogs"],
+   [3, "Other"]
+  ],
+  "languages": ["da", "de", "en", "es", "fr", "hu", "it", "nl", "pl", "pt", "pt-br", "ru", "tr", "uk", "zh", "zh-tw", "multi"]
+ },
+ "sign": [26371635363224346761897321751930915654424918233089807709115035868796959635259, 102743182485525428212118129590726582916427866605267645878431920818217333847135],
+ "signers_sign": "GxHBPHPG8y3EJjZTNmvNuDYfl4/lcdE99zbdS06DqLJrTm9VmI26FMgbkT47JwEFyHD4PaE2du1tUJdU24qIqtQ=",
+ "signs": {
+  "1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB": "HIw+sDgNTRVxfh05p6O3HJunIRQdVtZkztfOrtiC6ixhaoW/eNGnPI8I2hAhDyPt3TGWXjXNxLKTn4MSehRtlYk="
+ },
+ "signs_required": 1,
+ "title": "ZeroSites",
+ "zeronet_version": "0.5.5"
+}

@@ -1,0 +1,69 @@
+{
+	"db_name": "ZeroSites",
+	"db_file": "data/users/zerosites.db",
+	"version": 2,
+	"maps": {
+        ".+/data.json": {
+            "to_table": [
+            	"site",
+            	{"node": "site_star", "table": "site_star", "key_col": "site_uri", "val_col": "value"}
+            ]
+        },
+        ".+/content.json": {
+            "to_json_table": [ "cert_user_id" ],
+            "file_name": "data.json"
+        },
+        "stats.json": {
+        	"to_table": [
+        		"site_stat"
+        	]
+        }
+
+	},
+	"tables": {
+		"site": {
+			"cols": [
+				["site_id", "INTEGER"],
+				["category", "INTEGER"],
+				["language", "TEXT"],
+				["title", "TEXT"],
+				["description", "TEXT"],
+				["address", "TEXT"],
+				["tags", "TEXT"],
+				["date_added", "DATETIME"],
+				["json_id", "INTEGER REFERENCES json (json_id)"]
+			],
+			"indexes": ["CREATE UNIQUE INDEX site_key ON site(json_id, date_added)", "CREATE INDEX site_category ON site(category)"],
+			"schema_changed": 10
+		},
+		"site_stat": {
+			"cols": [
+				["site_uri", "TEXT"],
+				["peers", "INTEGER"],
+				["date_updated", "DATETIME"],
+				["json_id", "INTEGER REFERENCES json (json_id)"]
+			],
+			"indexes":["CREATE INDEX site_stat_key ON site_stat(json_id)", "CREATE UNIQUE INDEX site_stat_uri ON site_stat(site_uri)"],
+			"schema_changed": 10
+		},
+		"site_star": {
+			"cols": [
+				["site_uri", "TEXT"],
+				["value", "INTEGER"],
+				["json_id", "INTEGER REFERENCES json (json_id)"]
+			],
+			"indexes":["CREATE INDEX site_star_key ON site_star(json_id)"],
+			"schema_changed": 10
+		},
+        "json": {
+            "cols": [
+                ["json_id", "INTEGER PRIMARY KEY AUTOINCREMENT"],
+                ["directory", "TEXT"],
+                ["file_name", "TEXT"],
+                ["cert_user_id", "TEXT"]
+            ],
+            "indexes": ["CREATE UNIQUE INDEX path ON json(directory, file_name)"],
+            "schema_changed": 10
+        }
+	}
+}

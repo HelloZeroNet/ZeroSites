@@ -1,0 +1,19 @@
+.form .formfield .title {
+	font-size: 13px; text-align: right; margin-top: 40px; text-transform: uppercase; letter-spacing: 2px; display: block;
+	margin-left: 0px; margin-bottom: -31px; width: 17%; margin-right: 10px; box-sizing: border-box; color: #999;
+}
+.form .formfield .title.invalid { color: #ee0a73; transition: all 0.3s }
+.form .formfield input.text { font-size: 16px; padding: 10px; width: 80%; font-weight: lighter; font-family: Roboto; border: 1px solid #DDD; margin-right: 0px; box-sizing: border-box; left: 20px; transition: all 0.3s }
+.form .formfield input.text:focus { border: 1px solid #AF3BFF; outline: none; transition: none }
+.form .formfield .radiogroup { min-height: 30px; width: 80%; margin-left: auto; text-align: left }
+.form .formfield .radiogroup-lang { text-transform: uppercase; }
+.form .formfield .radiogroup + .invalid-reason { margin-top: -29px; }
+.form .formfield .radio {
+	text-decoration: none; color: #333; padding: 9px; display: inline-block; border: 1px solid #EEE;
+	min-width: 49.7px; text-align: center; font-size: 14px; margin-top: 5px; transition: all 0.3s
+}
+.form .formfield .radio.active { background-color: #AF3BFF; color: white }
+.form .formfield .radio:hover { border: 1px solid #AF3BFF; transition: none }
+
+.form input.text.invalid { border: 1px solid #ee0a73 }
+.form .invalid-reason { position: absolute; margin-right: 30px; display: inline-block; right: 0px; padding: 3px 9px; background-color: #ee0a73; font-size: 13px; color: white; z-index: 999; pointer-events: none }

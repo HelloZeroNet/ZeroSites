@@ -1,0 +1,76 @@
+body { background-color: #ECF1F5; font-family: Roboto; margin: 0px; padding: 0px; backface-visibility: hidden }
+
+h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: lighter; }
+
+#SiteLists { max-width: 1600px; margin: 0px auto; padding: 20px; position: relative; clear: both; }
+#SiteLists .menu { margin-top: 30px; width: 350px; }
+#SiteLists .menu .all { width: 97.8%; margin-left: 7px }
+#SiteLists .sitelists { transition: all 0.3s }
+
+#SiteLists .sitelist { transition: all 0.9s cubic-bezier(0.77, 0, 0.175, 1); overflow: hidden; opacity: 1; transform: scale(1); transform-origin: left top;     white-space: nowrap; }
+#SiteLists .sitelist.empty { width: 0px; padding: 0px; margin: 0px; opacity: 0; transform: scale(0); }
+
+#SiteLists.state-siteadd .sitelists { opacity: 0.1; pointer-events: none }
+.form-siteadd {
+	overflow: hidden; ransform-origin: top; transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1); text-align: right;
+	width: 100%; background-color: white; padding: 0px 30px; margin-left: auto; height: 0px; transform-origin: top; transform: rotateX(0deg);
+	margin-right: 1px; box-sizing: border-box; box-shadow: 0px 0px 35px #CCC; max-width: 700px; padding-top: 10px; padding-bottom: 20px;
+}
+.form-siteadd.hidden { padding-top: 0px; padding-bottom: 0px; height: 0px; transform: rotateX(-45deg); }
+/*#SiteLists.state-siteadd .form-siteadd { max-height: 475px; padding-top: 10px; padding-bottom: 20px; }*/
+
+.sitelists-right { 	position: absolute; right: 0px; top: -17px;  text-transform: uppercase; color: #888787; font-size: 14px; letter-spacing: 0.5px; text-align: right }
+.sitelists-right .right-link { margin-right: 37px; text-decoration: none; color: inherit }
+.sitelists-right .filter .symbol, .sitelists-right .certselect .symbol { margin-right: 10px; }
+.sitelists-right .siteadd .symbol { margin-right: 10px; background-color: #FFF; padding: 3px; border-radius: 25px; color: #C4C7CA; width: 16px; height: 16px; display: inline-block; text-align: center; transition: all 0.3s }
+.sitelists-right .title { border-bottom: 2px solid rgba(0,0,0,0); transition: all 0.3s; }
+.sitelists-right .right-link:hover .symbol { color: #ee0a73; transition: none }
+.sitelists-right .right-link:hover .title { border-bottom: 2px solid #ee0a73; color: #ee0a73; transition: none }
+
+.sitelist {
+	width: 33.33%; background-color: white; padding: 10px; border-radius: 3px; border: 1px solid #E8EDF1; box-sizing: border-box; text-align: left;
+	box-shadow: 0px 5px 11px -3px rgba(0,0,0,0.1); display: inline-block; vertical-align: top; margin-bottom: 10px; margin-left: -1px;
+}
+.sitelist h2 { font-weight: 100; font-size: 24px; margin: 12px; color: #E91E63; }
+
+.site { padding: 15px; border-top: 1px solid #EEE; display: block; text-decoration: none; color: #333; transition: all 0.3s; white-space: nowrap; }
+/*.site.my { border-left: 4px solid #e6f2ff; }*/
+.site:hover { background-color: #F8FAFB; transition: none }
+.site:hover .go { color: #666 }
+.site .title { font-weight: bold; font-size: 120%; margin-bottom: 5px; display: inline-block; overflow: hidden; white-space: nowrap; max-width: 90%; text-overflow: ellipsis; border-bottom: 1px solid #FFF }
+.site:hover .title { border-color: #F8FAFB }
+.site:visited .title { /*border-color: #cbcfff;*/ color: #888; }
+.site .description { opacity: 0.8; font-size: 90%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
+.site .go { float: right; font-size: 163%; line-height: 43px; vertical-align: middle; color: #D3D9DE }
+.site .tag { display: inline-block; text-transform: uppercase; font-size: 11px; margin-left: 10px; padding: 3px 10px; border-radius: 12px; vertical-align: 12px }
+.site .tag-new { color: #2ecc71; border: 1px solid #2ECC71; }
+.site .tag-popular { color: #E91E63; border: 1px solid #F48FB1; }
+.site .tag-my { color: #5d68ff; border: 1px solid #cbcfff; }
+
+.site .right { float: right; background-color: white; position: relative; transition: all 0.3s; text-align: right }
+.site:hover .right { background-color: #F8FAFB; transition: none }
+.site .star, .site .comments { text-decoration: none; color: #DDD; font-size: 19px; padding: 9px; margin-top: -10px; margin-right: -10px; transition: all 0.3s; display: block }
+.site .star:hover, .site .comments:hover { color: #FF9800; transition: none }
+.site .star:hover .icon { opacity: 1; transition: none }
+.site.starred .star .icon { filter: none }
+.site .star:hover .num, .site .comments:hover .num { color: #111; transition: none }
+.site .star .num, .site .comments .num { font-size: 14px; vertical-align: 1px; margin-right: 3px; color: #666; font-weight: lighter; transition: all 0.3s }
+.site .star .icon { margin-left: 6px; transition: all 0.3s; opacity: 0.6 }
+.site .comments { padding-bottom: 0px; display: none }
+.site .comments .icon { opacity: 0.4; transition: all 0.3s; vertical-align: -4px; margin-left: 7px; }
+.site .comments:hover .icon { opacity: 1; transition: none; filter: none; }
+.site.nocomment .comments { opacity: 0 }
+.site.nocomment:hover .comments { opacity: 1 }
+.site .peers { padding-bottom: 0px }
+.site .peers .icon { opacity: 0.4; transition: all 0.3s; vertical-align: -4px; margin-left: 11px; }
+.site .peers .num { color: #666; font-weight: lighter; font-size: 14px; }
+
+@media only screen and (max-width: 1200px) {
+	.sitelist { width: 50% }
+}
+@media only screen and (max-width: 720px) {
+	.sitelist { width: 100% }
+	#SiteLists { margin-top: 70px; }
+	.sitelists-right { top: -67px; margin-top: 5px; }
+	.right-link { display: block; margin-bottom: 5px }
+}

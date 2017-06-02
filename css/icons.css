@@ -1,0 +1,19 @@
+.icon {
+	display: inline-block; vertical-align: text-bottom; background-repeat: no-repeat; height: 30px;
+	vertical-align: middle; line-height: 30px; transition: background-color 0.3s;
+}
+.icon-comment {
+	width: 20px; height: 16px;
+	filter: grayscale(100%);
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="17" height="15"><defs><style>.cls-1{fill-rule:evenodd; fill: %233F51B5}</style></defs><path id="message" d="M1 0h15a1 1 0 0 1 1 1.2v9.2a1 1 0 0 1-1 1.2H8.3c-.8 0-4 3.6-5 3.4-.8 0-1-3.4-1-3.4H1a1 1 0 0 1-1-1.2V1.2A1 1 0 0 1 1 0zm0 .8h15a.4.4 0 0 1 .2.4v9.2a.4.4 0 0 1-.3.4H1a.4.4 0 0 1-.2-.4V1.2A.4.4 0 0 1 1 .8zm2.4 13.5L3 10.8h4.6l-4.2 3.5M4.7 5a1 1 0 1 1-1 1 1 1 0 0 1 1-1zm3.8 0a1 1 0 1 1-1 1 1 1 0 0 1 1-1zm3.8 0a1 1 0 1 1-1 1 1 1 0 0 1 1-1z" class="cls-1"/></svg>')
+}
+.icon-comment:empty { padding-right: 0px }
+
+.icon-star {
+	width: 20px; height: 22px;
+	filter: grayscale(100%);
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 22 21"><defs><style>.cls-1{fill: %23FF9800} </style></defs><path id="star" class="cls-1" d="M16.866 13.52L18.8 21 11 16.8 3.2 21l1.932-7.476L0 7.02l7.373.578L11 0l3.625 6.6L22 7.02zm-3.373-5.7L11 2.28 8.508 7.818l-6.07-.023 4.53 5.78-1.64 5.14 5.672-3.2 5.673 3.2-1.64-5.14 4.528-5.78zM0 7h9v1H0V7zm13 0h9v1h-9V7z"/></svg>');
+}
+
+.icon-profile { font-size: 8px; top: -0.3em; border-radius: 0.7em 0.7em 0 0; border: 1px solid #444; width: 12px; height: 0.5em; position: relative; display: inline-block; margin-right: 3px; margin-left: 5px; }
+.icon-profile::before { position: absolute; content: ""; top: -1.3em; left: 15%; width: 0.8em; height: 0.7em; border-radius: 50%; border: 1px solid #111; }

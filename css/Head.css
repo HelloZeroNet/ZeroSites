@@ -1,0 +1,19 @@
+#Head { margin: 0px 20px }
+#Head h1 {
+	font-size: 300%; color: #EE1865; margin-top: 20px; display: inline-block; font-weight: 100; vertical-align: 12px; margin-bottom: 10px;
+	background: -webkit-linear-gradient(left, #EB0080, #EF193E 70%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+#Head h2 {
+	font-size: 14px; padding-left: 138px; font-weight: lighter; color: #AAA; width: 280px; margin: 0px auto; text-align: left; margin-top: -41px; letter-spacing: 0.5px;
+}
+#Head .logo { display: inline-block; margin-right: 20px; margin-left: 25px; }
+
+#Head .order { margin-top: 35px; display: inline-block; vertical-align: top; white-space: nowrap; margin-top: 35px; }
+#Head .order-item {
+	border-radius: 101px; display: inline-block; margin-right: 5px; color: #333; transition: all 0.3s;
+	padding: 11px 21px; display: inline-block; text-transform: uppercase; text-decoration: none; letter-spacing: 2px; font-weight: lighter; font-size: 13px;
+}
+#Head .order-item:hover { transition: none; color: #ee0a73 }
+#Head .order-item:focus { transition: all 0.3s }
+#Head .order-item.active { background-color: #ee0a73; color: white; box-shadow: 0px 3px 14px -2px #ff6db0 }
+#Head .order-item.new.active { background-color: #2ECC71;; color: white; box-shadow: 0px 3px 14px -2px #2ECC71 }
