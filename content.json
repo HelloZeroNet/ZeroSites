@@ -49,5 +49,8 @@
  },
  "signs_required": 1,
  "title": "ZeroSites",
+ "translate": {
+  "js/all.js"
+ },
  "zeronet_version": "0.5.5"
 }

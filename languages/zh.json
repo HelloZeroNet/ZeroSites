@@ -1,0 +1,22 @@
+{
+	"Invalid site address: only ZeroNet addresses supported": "无效的站点地址：仅支持 ZeroNet 站点地址",
+	"This field is required": "该栏为必填项",
+
+	"Popular": "热门",
+	"New": "新增",
+
+	"Address": "地址",
+	"e.g. http://127.0.0.1:43110/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "例如 http://127.0.0.1:43110/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8",
+	"Title": "标题",
+	"e.g. ZeroBlog": "例如 ZeroBlog",
+	"Language": "语言",
+	"Category": "类别",
+	"Description": "描述",
+	"e.g. ZeroNet changelog and related informations": "例如 ZeroNet 更新日志和相关信息",
+	"Submit": "提交",
+
+	"Site languages: ": "站点语言",
+	"User: ": "用户：",
+	"Filter: ": "筛选器：",
+	"Submit new site": "提交新站点"
+}
