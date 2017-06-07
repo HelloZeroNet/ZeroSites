@@ -105,6 +105,7 @@ class SiteLists extends Class
 
 	render: =>
 		if @need_update
+			@need_update = false
 			@update()
 
 		h("div#SiteLists", {classes: {"state-siteadd": @state == "siteadd"}},
