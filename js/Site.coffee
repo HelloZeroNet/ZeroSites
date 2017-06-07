@@ -5,6 +5,9 @@ class Site
 	getUri: =>
 		return @row.directory + "_" + @row.site_id
 
+	isNew: =>
+		return Time.timestamp() - @row.date_added < 60*60*24
+
 	handleStarClick: =>
 		if not Page.site_info.cert_user_id
 			Page.user.certSelect =>
@@ -51,7 +54,7 @@ class Site
 				)
 			])
 			h("div.title", @row.title),
-			if @row.tags?.indexOf("new") >= 0 then h("div.tag.tag-new", "New"),
+			if @isNew() then h("div.tag.tag-new", "New"),
 			if @row.tags?.indexOf("popular") >= 0 then h("div.tag.tag-popular", "Popular"),
 			if @row.cert_user_id == Page.site_info.cert_user_id then h("div.tag.tag-my", "My"),
 			h("div.description", @row.description)
