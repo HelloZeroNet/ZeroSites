@@ -915,6 +915,9 @@
       padding_top = cstyle.paddingTop;
       padding_bottom = cstyle.paddingBottom;
       transition = cstyle.transition;
+      if (elem.getBoundingClientRect().top > 1600) {
+        return;
+      }
       elem.style.boxSizing = "border-box";
       elem.style.overflow = "hidden";
       elem.style.transform = "scale(0.6)";
@@ -948,6 +951,10 @@
     };
 
     Animation.prototype.slideUp = function(elem, remove_func, props) {
+      if (elem.getBoundingClientRect().top > 1600) {
+        remove_func();
+        return;
+      }
       elem.className += " animate-back";
       elem.style.boxSizing = "border-box";
       elem.style.height = elem.offsetHeight + "px";
@@ -1810,6 +1817,7 @@
       this.onMessage = bind(this.onMessage, this);
       this.url = url;
       this.waiting_cb = {};
+      this.history_state = {};
       this.wrapper_nonce = document.location.href.replace(/.*wrapper_nonce=([A-Za-z0-9]+).*/, "$1");
       this.connect();
       this.next_message_id = 1;
@@ -1823,7 +1831,29 @@
     ZeroFrame.prototype.connect = function() {
       this.target = window.parent;
       window.addEventListener("message", this.onMessage, false);
-      return this.cmd("innerReady");
+      this.cmd("innerReady");
+      window.addEventListener("beforeunload", (function(_this) {
+        return function(e) {
+          _this.log("Save scrollTop", window.pageYOffset);
+          _this.history_state["scrollTop"] = window.pageYOffset;
+          return _this.cmd("wrapperReplaceState", [_this.history_state, null]);
+        };
+      })(this));
+      return this.cmd("wrapperGetState", [], (function(_this) {
+        return function(state) {
+          return _this.handleState(state);
+        };
+      })(this));
+    };
+
+    ZeroFrame.prototype.handleState = function(state) {
+      if (state != null) {
+        this.history_state = state;
+      }
+      this.log("Restore scrollTop", state, window.pageYOffset);
+      if (window.pageYOffset === 0 && state) {
+        return window.scroll(window.pageXOffset, state.scrollTop);
+      }
     };
 
     ZeroFrame.prototype.onMessage = function(e) {
@@ -1844,6 +1874,9 @@
         return this.onOpenWebsocket();
       } else if (cmd === "wrapperClosedWebsocket") {
         return this.onCloseWebsocket();
+      } else if (cmd === "wrapperPopState") {
+        this.handleState(message.params.state);
+        return this.onRequest(cmd, message.params);
       } else {
         return this.onRequest(cmd, message.params);
       }
@@ -1872,6 +1905,21 @@
         "cmd": cmd,
         "params": params
       }, cb);
+    };
+
+    ZeroFrame.prototype.cmdp = function(cmd, params) {
+      var p;
+      if (params == null) {
+        params = {};
+      }
+      p = new Promise();
+      this.send({
+        "cmd": cmd,
+        "params": params
+      }, function(res) {
+        return p.resolve(res);
+      });
+      return p;
     };
 
     ZeroFrame.prototype.send = function(message, cb) {
@@ -1926,7 +1974,10 @@
 
     Head.prototype.render = function() {
       return h("div#Head", [
-        h("div.logo", [
+        h("a.logo", {
+          href: "?Home",
+          onclick: Page.handleLinkClick
+        }, [
           h("img", {
             "src": "img/logo.png",
             "width": 58,
@@ -2238,17 +2289,43 @@
       this.item_list.sync(this.row.sites);
     }
 
-    SiteList.prototype.render = function() {
+    SiteList.prototype.isHidden = function() {
+      if (Page.site_lists.filter_category === null) {
+        return false;
+      } else {
+        return Page.site_lists.filter_category !== this.row.id;
+      }
+    };
+
+    SiteList.prototype.render = function(i) {
+      var clear, limit;
+      if (Page.site_lists.filter_category === this.row.id) {
+        limit = 100;
+      } else {
+        limit = 6;
+      }
+      if (this.sites.length === 0) {
+        clear = false;
+      } else {
+        clear = i % Page.site_lists.cols === 1;
+      }
       return h("div.sitelist", {
         key: this.row.id,
         classes: {
-          empty: this.sites.length === 0
+          empty: this.sites.length === 0,
+          hidden: this.isHidden(),
+          selected: Page.site_lists.filter_category === this.row.id,
+          clear: clear
         }
       }, [
         h("h2", this.row.title), h("div.sites", [
-          this.sites.map(function(item) {
+          this.sites.slice(0, +limit + 1 || 9e9).map(function(item) {
             return item.render();
-          })
+          }), this.sites.length > limit ? h("a.more", {
+            href: "?Category:" + this.row.id + ":" + (Text.toUrl(this.row.title)),
+            onclick: Page.handleLinkClick,
+            enterAnimation: Animation.slideDown
+          }, "Show more...") : void 0
         ])
       ]);
     };
@@ -2260,6 +2337,7 @@
   window.SiteList = SiteList;
 
 }).call(this);
+
 
 
 /* ---- /1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB/js/SiteLists.coffee ---- */
@@ -2276,48 +2354,55 @@
 
     function SiteLists() {
       this.render = bind(this.render, this);
+      this.getVisibleSiteLists = bind(this.getVisibleSiteLists, this);
       this.formatFilterTitle = bind(this.formatFilterTitle, this);
       this.handleSiteAddClick = bind(this.handleSiteAddClick, this);
       this.handleFiltersClick = bind(this.handleFiltersClick, this);
       this.renderFilterLanguage = bind(this.renderFilterLanguage, this);
       this.handleFilterLanguageClick = bind(this.handleFilterLanguageClick, this);
-      var key, site_list;
       this.menu_filters = new Menu();
       this.state = null;
       this.filter_lang = {};
-      this.site_lists = {};
       this.site_add = new SiteAdd();
-      this.site_lists = (function() {
-        var ref, results;
-        ref = this.site_lists_db;
-        results = [];
-        for (key in ref) {
-          site_list = ref[key];
-          results.push(site_list);
-        }
-        return results;
-      }).call(this);
+      this.site_lists = [];
+      this.site_lists_db = {};
       this.need_update = false;
       this.loaded = false;
-      this.num_found = null;
+      this.num_total = null;
       Page.on_site_info.then((function(_this) {
         return function() {
           return Page.on_local_storage.then(function() {
-            var i, id, len, ref, ref1, title;
+            var id, j, len, ref, ref1, site_list, title;
             _this.filter_lang = Page.local_storage.filter_lang;
             ref = Page.site_info.content.settings.categories;
-            for (i = 0, len = ref.length; i < len; i++) {
-              ref1 = ref[i], id = ref1[0], title = ref1[1];
-              _this.site_lists[id] = new SiteList({
+            for (j = 0, len = ref.length; j < len; j++) {
+              ref1 = ref[j], id = ref1[0], title = ref1[1];
+              site_list = new SiteList({
                 id: id,
                 title: title,
                 sites: []
               });
+              _this.site_lists_db[id] = site_list;
+              _this.site_lists.push(site_list);
             }
             return _this.update();
           });
         };
       })(this));
+      window.onresize = (function(_this) {
+        return function() {
+          if (window.innerWidth < 720) {
+            _this.cols = 1;
+          } else if (window.innerWidth < 1200) {
+            _this.cols = 2;
+          } else {
+            _this.cols = 3;
+          }
+          _this.log("Cols: " + _this.cols);
+          return Page.projector.scheduleRender();
+        };
+      })(this);
+      window.onresize();
     }
 
     SiteLists.prototype.update = function() {
@@ -2342,23 +2427,23 @@
       this.logStart("Sites");
       return Page.cmd("dbQuery", query, (function(_this) {
         return function(rows) {
-          var category, i, len, name, ref, row, site_list, sites_db;
+          var category, j, len, name, ref, row, site_list, sites_db;
           sites_db = {};
-          for (i = 0, len = rows.length; i < len; i++) {
-            row = rows[i];
+          for (j = 0, len = rows.length; j < len; j++) {
+            row = rows[j];
             if (sites_db[name = row["category"]] == null) {
               sites_db[name] = [];
             }
             sites_db[row["category"]].push(row);
           }
-          ref = _this.site_lists;
+          ref = _this.site_lists_db;
           for (category in ref) {
             site_list = ref[category];
             site_list.item_list.sync(sites_db[category] || []);
           }
           _this.loaded = true;
-          _this.num_found = rows.length;
-          _this.logEnd("Sites", "found: " + _this.num_found);
+          _this.num_total = rows.length;
+          _this.logEnd("Sites", "found: " + _this.num_total);
           return Page.projector.scheduleRender();
         };
       })(this));
@@ -2392,11 +2477,11 @@
           selected: isEmpty(this.filter_lang)
         }
       }, "Show all"), (function() {
-        var i, len, ref, results;
+        var j, len, ref, results;
         ref = Page.languages;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          lang = ref[i];
+        for (j = 0, len = ref.length; j < len; j++) {
+          lang = ref[j];
           results.push([
             h("a", {
               href: "#" + lang,
@@ -2451,18 +2536,35 @@
       }
     };
 
+    SiteLists.prototype.getVisibleSiteLists = function() {
+      if (this.filter_category) {
+        return [this.site_lists_db[this.filter_category]];
+      } else {
+        return this.site_lists;
+      }
+    };
+
     SiteLists.prototype.render = function() {
-      var lang, ref;
+      var i, j, lang, len, num_found, ref, ref1, site_list;
       if (this.need_update) {
         this.need_update = false;
         this.update();
+      }
+      i = 0;
+      num_found = 0;
+      ref = this.site_lists;
+      for (j = 0, len = ref.length; j < len; j++) {
+        site_list = ref[j];
+        if (!site_list.isHidden()) {
+          num_found += site_list.sites.length;
+        }
       }
       return h("div#SiteLists", {
         classes: {
           "state-siteadd": this.state === "siteadd"
         }
       }, this.loaded ? h("div.sitelists-right", [
-        ((ref = Page.site_info) != null ? ref.cert_user_id : void 0) ? h("a.certselect.right-link", {
+        ((ref1 = Page.site_info) != null ? ref1.cert_user_id : void 0) ? h("a.certselect.right-link", {
           href: "#Select",
           onclick: Page.user.certSelect
         }, [h("span.symbol", "⎔"), h("span.title", "User: " + Page.site_info.cert_user_id)]) : void 0, h("a.filter.right-link", {
@@ -2473,7 +2575,7 @@
           href: "#",
           onclick: this.handleSiteAddClick
         }, [h("span.symbol", "＋"), h("span.title", "Submit new site")])
-      ]) : void 0, this.site_add.render(), this.num_found === 0 && !isEmpty(this.filter_lang) ? h("h1.empty", {
+      ]) : void 0, this.site_add.render(), num_found === 0 && !isEmpty(this.filter_lang) ? h("h1.empty", {
         enterAnimation: Animation.slideDown,
         exitAnimation: Animation.slideUp
       }, "No sites found for languages: " + (((function() {
@@ -2484,7 +2586,11 @@
         }
         return results;
       }).call(this)).join(', '))) : void 0, this.loaded ? h("div.sitelists", this.site_lists.map(function(site_list) {
-        return site_list.render();
+        if (site_list.sites.length) {
+          i++;
+          num_found += site_list.sites.length;
+        }
+        return site_list.render(i);
       })) : void 0);
     };
 
@@ -2510,7 +2616,6 @@
   window.SiteLists = SiteLists;
 
 }).call(this);
-
 
 
 /* ---- /1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB/js/User.coffee ---- */
@@ -2650,6 +2755,7 @@
       this.reloadServerInfo = bind(this.reloadServerInfo, this);
       this.reloadSiteInfo = bind(this.reloadSiteInfo, this);
       this.onOpenWebsocket = bind(this.onOpenWebsocket, this);
+      this.handleLinkClick = bind(this.handleLinkClick, this);
       return Play.__super__.constructor.apply(this, arguments);
     }
 
@@ -2657,8 +2763,10 @@
       this.params = {};
       this.site_info = null;
       this.server_info = null;
+      this.history_state = {};
       this.on_site_info = new Promise();
       this.on_local_storage = new Promise();
+      this.on_loaded = new Promise();
       this.user = new User();
       this.on_site_info.then((function(_this) {
         return function() {
@@ -2677,21 +2785,81 @@
     };
 
     Play.prototype.createProjector = function() {
+      var url;
       this.projector = maquette.createProjector();
       this.head = new Head();
       this.site_lists = new SiteLists();
       if (base.href.indexOf("?") === -1) {
         this.route("");
       } else {
-        this.route(base.href.replace(/.*?\?/, ""));
+        url = base.href.replace(/.*?\?/, "");
+        this.route(url);
+        this.history_state["url"] = url;
       }
+      this.on_loaded.then((function(_this) {
+        return function() {
+          _this.log("onloaded");
+          return window.requestAnimationFrame(function() {
+            return document.body.className = "loaded";
+          });
+        };
+      })(this));
       this.projector.replace($("#Head"), this.head.render);
-      return this.projector.replace($("#SiteLists"), this.site_lists.render);
+      this.projector.replace($("#SiteLists"), this.site_lists.render);
+      this.loadLocalStorage();
+      return setInterval((function() {
+        return Page.projector.scheduleRender();
+      }), 60 * 1000);
     };
 
     Play.prototype.route = function(query) {
+      var page, param, ref;
       this.params = Text.parseQuery(query);
-      return this.log("Route", this.params);
+      ref = this.params.url.split(":"), page = ref[0], param = ref[1];
+      this.content = this.site_lists;
+      if (page === "Category") {
+        this.site_lists.filter_category = parseInt(param);
+      } else {
+        this.site_lists.filter_category = null;
+      }
+      Page.projector.scheduleRender();
+      return this.log("Route", page, param);
+    };
+
+    Play.prototype.setUrl = function(url, mode) {
+      if (mode == null) {
+        mode = "push";
+      }
+      url = url.replace(/.*?\?/, "");
+      this.log("setUrl", this.history_state["url"], "->", url);
+      if (this.history_state["url"] === url) {
+        this.content.update();
+        return false;
+      }
+      this.history_state["url"] = url;
+      if (mode === "replace") {
+        this.cmd("wrapperReplaceState", [this.history_state, "", url]);
+      } else {
+        this.cmd("wrapperPushState", [this.history_state, "", url]);
+      }
+      this.route(url);
+      return false;
+    };
+
+    Play.prototype.handleLinkClick = function(e) {
+      if (e.which === 2) {
+        return true;
+      } else {
+        this.log("save scrollTop", window.pageYOffset);
+        this.history_state["scrollTop"] = window.pageYOffset;
+        this.cmd("wrapperReplaceState", [this.history_state, null]);
+        window.scroll(window.pageXOffset, 0);
+        this.history_state["scrollTop"] = 0;
+        this.on_loaded.resolved = false;
+        document.body.className = "";
+        this.setUrl(e.currentTarget.search);
+        return false;
+      }
     };
 
     Play.prototype.createUrl = function(key, val) {
@@ -2706,7 +2874,7 @@
       } else {
         params[key] = val;
       }
-      return "?" + Text.encodeQuery(params);
+      return "?" + Text.queryEncode(params);
     };
 
     Play.prototype.loadLocalStorage = function() {
@@ -2742,7 +2910,6 @@
     };
 
     Play.prototype.onOpenWebsocket = function(e) {
-      this.loadLocalStorage();
       this.reloadSiteInfo();
       return this.reloadServerInfo();
     };
@@ -2766,8 +2933,19 @@
     Play.prototype.onRequest = function(cmd, params) {
       if (cmd === "setSiteInfo") {
         return this.setSiteInfo(params);
+      } else if (cmd === "wrapperPopState") {
+        this.log("wrapperPopState", params);
+        if (params.state) {
+          if (!params.state.url) {
+            params.state.url = params.href.replace(/.*\?/, "");
+          }
+          this.on_loaded.resolved = false;
+          document.body.className = "";
+          window.scroll(window.pageXOffset, params.state.scrollTop || 0);
+          return this.route(params.state.url || "");
+        }
       } else {
-        return this.log("Unknown command", params);
+        return this.log("Unknown command", cmd, params);
       }
     };
 

@@ -4,8 +4,8 @@
  "description": "Sites of ZeroNet",
  "files": {
   "css/all.css": {
-   "sha512": "049fdb8d1f9d7485fbb787fc579b1705534ea2edc92c1d2573521a469b2da4fa",
-   "size": 115082
+   "sha512": "6356c618edf0a317fec05aee0fc5179fb920c8b62b55baecf8538cd2c4b35014",
+   "size": 115183
   },
   "dbschema.json": {
    "sha512": "95dee8798b26d729501eb473f6ec9c6802b468c2e3415de0a3c820723a9c5560",
@@ -16,12 +16,20 @@
    "size": 2383
   },
   "index.html": {
-   "sha512": "93b18936de9ba27dffd71ef735eef3abe65a02cc17acaf21dd66f7074570b331",
-   "size": 563
+   "sha512": "9c4a9a6bfe23600ac014a1d84ecf6aa15f7944860c3a1d7c11d16d4c1cb3808e",
+   "size": 590
   },
   "js/all.js": {
-   "sha512": "661d281465aa01ca5c869228e89d8e379a7059c65b8f4b60084df11d41d81a3b",
-   "size": 95489
+   "sha512": "096bb4b418ad19cdf7ce1790dfcab28d34caf5fc537030cb599facbe79e8b0ef",
+   "size": 95490
+  },
+  "languages/zh-tw.json": {
+   "sha512": "2652c2927fc68380c3f4baa60776be1005c66a55dac79bbb64e9686e20e52fcb",
+   "size": 774
+  },
+  "languages/zh.json": {
+   "sha512": "235884740efefc6cd95ab0fa604a58e4fcd1481106e153ba04d594326b1852b1",
+   "size": 768
   }
  },
  "ignore": "((js|css)/(?!all.(js|css))|data/.*)",
@@ -32,7 +40,7 @@
   }
  },
  "inner_path": "content.json",
- "modified": 1496436487,
+ "modified": 1496793938,
  "postmessage_nonce_security": true,
  "settings": {
   "categories": [
@@ -49,10 +57,10 @@
   ],
   "languages": ["da", "de", "en", "es", "fr", "hu", "it", "nl", "pl", "pt", "pt-br", "ru", "tr", "uk", "zh", "zh-tw", "multi"]
  },
- "sign": [26371635363224346761897321751930915654424918233089807709115035868796959635259, 102743182485525428212118129590726582916427866605267645878431920818217333847135],
+ "sign": [103135800597834701520827872162493645370423308670023927561646854201400226986269, 45652655818329030207935802640288636902177803640862135096157258176715368213698],
  "signers_sign": "GxHBPHPG8y3EJjZTNmvNuDYfl4/lcdE99zbdS06DqLJrTm9VmI26FMgbkT47JwEFyHD4PaE2du1tUJdU24qIqtQ=",
  "signs": {
-  "1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB": "HIw+sDgNTRVxfh05p6O3HJunIRQdVtZkztfOrtiC6ixhaoW/eNGnPI8I2hAhDyPt3TGWXjXNxLKTn4MSehRtlYk="
+  "1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB": "G6WYDdp0rNxa9s+0rEFXMwKCVAeMust3S51tkiNAQ3ZJEOQ2cqXBuDb+ardgXdrsJ7GU54KNzhjUjYhyRvhOw3E="
  },
  "signs_required": 1,
  "title": "ZeroSites",
