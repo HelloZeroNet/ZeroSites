@@ -5,9 +5,11 @@ class Play extends ZeroFrame
 		@params = {}
 		@site_info = null
 		@server_info = null
+		@history_state = {}
 
 		@on_site_info = new Promise()
 		@on_local_storage = new Promise()
+		@on_loaded = new Promise()
 
 		@user = new User()
 		@on_site_info.then =>
@@ -21,8 +23,6 @@ class Play extends ZeroFrame
 			@categories = @site_info.content.settings.categories
 
 
-
-
 	createProjector: ->
 		@projector = maquette.createProjector()
 		@head = new Head()
@@ -31,15 +31,70 @@ class Play extends ZeroFrame
 		if base.href.indexOf("?") == -1
 			@route("")
 		else
-			@route(base.href.replace(/.*?\?/, ""))
+			url = base.href.replace(/.*?\?/, "")
+			@route(url)
+			@history_state["url"] = url
+
+		# Remove fake long body
+		@on_loaded.then =>
+			@log "onloaded"
+			window.requestAnimationFrame ->
+				document.body.className = "loaded"
 
 		@projector.replace($("#Head"), @head.render)
 		@projector.replace($("#SiteLists"), @site_lists.render)
+		@loadLocalStorage()
+
+		# Update every minute to keep time since fields up-to date
+		setInterval ( ->
+			Page.projector.scheduleRender()
+		), 60*1000
 
 	# Route site urls
 	route: (query) ->
 		@params = Text.parseQuery(query)
-		@log "Route", @params
+		[page, param] = @params.url.split(":")
+		@content = @site_lists
+		if page == "Category"
+			@site_lists.filter_category = parseInt(param)
+		else
+			@site_lists.filter_category = null
+		Page.projector.scheduleRender()
+		@log "Route", page, param
+
+	setUrl: (url, mode="push") ->
+		url = url.replace(/.*?\?/, "")
+		@log "setUrl", @history_state["url"], "->", url
+		if @history_state["url"] == url
+			@content.update()
+			return false
+		@history_state["url"] = url
+		if mode == "replace"
+			@cmd "wrapperReplaceState", [@history_state, "", url]
+		else
+			@cmd "wrapperPushState", [@history_state, "", url]
+		@route url
+		return false
+
+
+	handleLinkClick: (e) =>
+		if e.which == 2
+			# Middle click dont do anything
+			return true
+		else
+			@log "save scrollTop", window.pageYOffset
+			@history_state["scrollTop"] = window.pageYOffset
+			@cmd "wrapperReplaceState", [@history_state, null]
+
+			window.scroll(window.pageXOffset, 0)
+			@history_state["scrollTop"] = 0
+
+			@on_loaded.resolved = false
+			document.body.className = ""
+
+			@setUrl e.currentTarget.search
+			return false
+
 
 	# Add/remove/change parameter to current site url
 	createUrl: (key, val) ->
@@ -50,8 +105,7 @@ class Play extends ZeroFrame
 				params[key] = val
 		else
 			params[key] = val
-		return "?"+Text.encodeQuery(params)
-
+		return "?"+Text.queryEncode(params)
 
 	loadLocalStorage: ->
 		@on_site_info.then =>
@@ -69,7 +123,6 @@ class Play extends ZeroFrame
 
 
 	onOpenWebsocket: (e) =>
-		@loadLocalStorage()
 		@reloadSiteInfo()
 		@reloadServerInfo()
 
@@ -85,8 +138,17 @@ class Play extends ZeroFrame
 	onRequest: (cmd, params) ->
 		if cmd == "setSiteInfo" # Site updated
 			@setSiteInfo(params)
+		else if cmd == "wrapperPopState" # Site updated
+			@log "wrapperPopState", params
+			if params.state
+				if not params.state.url
+					params.state.url = params.href.replace /.*\?/, ""
+				@on_loaded.resolved = false
+				document.body.className = ""
+				window.scroll(window.pageXOffset, params.state.scrollTop or 0)
+				@route(params.state.url or "")
 		else
-			@log "Unknown command", params
+			@log "Unknown command", cmd, params
 
 	setSiteInfo: (site_info) ->
 		@site_info = site_info
