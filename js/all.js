@@ -1974,12 +1974,17 @@
       this.render = bind(this.render, this);
       this.getClasses = bind(this.getClasses, this);
       this.handleStarClick = bind(this.handleStarClick, this);
+      this.isNew = bind(this.isNew, this);
       this.getUri = bind(this.getUri, this);
       this;
     }
 
     Site.prototype.getUri = function() {
       return this.row.directory + "_" + this.row.site_id;
+    };
+
+    Site.prototype.isNew = function() {
+      return Time.timestamp() - this.row.date_added < 60 * 60 * 24;
     };
 
     Site.prototype.handleStarClick = function() {
@@ -2022,7 +2027,7 @@
     };
 
     Site.prototype.render = function() {
-      var ref, ref1;
+      var ref;
       return h("a.site.nocomment", {
         href: Text.fixLink("http://127.0.0.1:43110/" + this.row.address),
         key: this.row.site_id,
@@ -2037,7 +2042,7 @@
           }, h("span.num", this.row.star || ""), h("span.icon.icon-star", "")), h("a.comments", {
             href: "#"
           }, h("span.num", "soon"), h("span.icon.icon-comment", "")), this.row.peers ? h("div.peers", h("span.num", this.row.peers), h("span.icon.icon-profile", "")) : void 0
-        ]), h("div.title", this.row.title), ((ref = this.row.tags) != null ? ref.indexOf("new") : void 0) >= 0 ? h("div.tag.tag-new", "New") : void 0, ((ref1 = this.row.tags) != null ? ref1.indexOf("popular") : void 0) >= 0 ? h("div.tag.tag-popular", "Popular") : void 0, this.row.cert_user_id === Page.site_info.cert_user_id ? h("div.tag.tag-my", "My") : void 0, h("div.description", this.row.description)
+        ]), h("div.title", this.row.title), this.isNew() ? h("div.tag.tag-new", "New") : void 0, ((ref = this.row.tags) != null ? ref.indexOf("popular") : void 0) >= 0 ? h("div.tag.tag-popular", "Popular") : void 0, this.row.cert_user_id === Page.site_info.cert_user_id ? h("div.tag.tag-my", "My") : void 0, h("div.description", this.row.description)
       ]);
     };
 
@@ -2449,6 +2454,7 @@
     SiteLists.prototype.render = function() {
       var lang, ref;
       if (this.need_update) {
+        this.need_update = false;
         this.update();
       }
       return h("div#SiteLists", {
@@ -2651,7 +2657,6 @@
       this.params = {};
       this.site_info = null;
       this.server_info = null;
-      this.address = null;
       this.on_site_info = new Promise();
       this.on_local_storage = new Promise();
       this.user = new User();
@@ -2745,7 +2750,6 @@
     Play.prototype.reloadSiteInfo = function() {
       return this.cmd("siteInfo", {}, (function(_this) {
         return function(site_info) {
-          _this.address = site_info.address;
           return _this.setSiteInfo(site_info);
         };
       })(this));
@@ -2768,9 +2772,7 @@
     };
 
     Play.prototype.setSiteInfo = function(site_info) {
-      if (site_info.address === this.address) {
-        this.site_info = site_info;
-      }
+      this.site_info = site_info;
       this.on_site_info.resolve();
       this.site_lists.onSiteInfo(site_info);
       return this.user.onSiteInfo(site_info);
