@@ -5,7 +5,6 @@ class Play extends ZeroFrame
 		@params = {}
 		@site_info = null
 		@server_info = null
-		@address = null
 
 		@on_site_info = new Promise()
 		@on_local_storage = new Promise()
@@ -76,7 +75,6 @@ class Play extends ZeroFrame
 
 	reloadSiteInfo: =>
 		@cmd "siteInfo", {}, (site_info) =>
-			@address = site_info.address
 			@setSiteInfo(site_info)
 
 	reloadServerInfo: =>
@@ -91,8 +89,7 @@ class Play extends ZeroFrame
 			@log "Unknown command", params
 
 	setSiteInfo: (site_info) ->
-		if site_info.address == @address
-			@site_info = site_info
+		@site_info = site_info
 		@on_site_info.resolve()
 		@site_lists.onSiteInfo(site_info)
 		@user.onSiteInfo(site_info)
