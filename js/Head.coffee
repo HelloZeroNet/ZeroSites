@@ -9,7 +9,7 @@ class Head
 
 	render: =>
 		h("div#Head", [
-			h("div.logo", [
+			h("a.logo", {href: "?Home", onclick: Page.handleLinkClick}, [
 				h("img", {"src": "img/logo.png", "width": 58, "height": 64}),
 				h("h1", "ZeroSites"),
 				# h("h2", "Sites created by ZeroNet community")
