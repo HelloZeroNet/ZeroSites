@@ -8,7 +8,7 @@ h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: li
 #SiteLists .sitelists { transition: all 0.3s }
 
 #SiteLists .sitelist { transition: all 0.9s cubic-bezier(0.77, 0, 0.175, 1); overflow: hidden; opacity: 1; transform: scale(1); transform-origin: left top;     white-space: nowrap; }
-#SiteLists .sitelist.empty { width: 0px; padding: 0px; margin: 0px; opacity: 0; transform: scale(0); }
+#SiteLists .sitelist.empty { width: 0px; padding: 0px; margin: 0px; opacity: 0; transform: scale(0); border-width: 0px; }
 
 #SiteLists.state-siteadd .sitelists { opacity: 0.1; pointer-events: none }
 .form-siteadd {
@@ -29,20 +29,31 @@ h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: li
 
 .sitelist {
 	width: 33.33%; background-color: white; padding: 10px; border-radius: 3px; border: 1px solid #E8EDF1; box-sizing: border-box; text-align: left;
-	box-shadow: 0px 5px 11px -3px rgba(0,0,0,0.1); display: inline-block; vertical-align: top; margin-bottom: 10px; margin-left: -1px;
+	box-shadow: 0px 5px 11px -3px rgba(0,0,0,0.1); display: block; vertical-align: top; margin-bottom: 10px; margin-left: -1px; max-height: 900px; float: left;
 }
+.sitelist.clear { clear: both }
 .sitelist h2 { font-weight: 100; font-size: 24px; margin: 12px; color: #E91E63; }
+.sitelist .more {
+	text-align: center; display: block; color: #ee0a73; text-decoration: none; padding: 10px;
+	transform: translateY(0px); transition: all 0.3s; box-shadow: 0px -20px 75px 17px #FFF;
+}
+.sitelist .more:hover { text-decoration: underline; transform: translateY(3px); box-shadow: 0px 0px 75px 17px #FFF; }
+.sitelist.hidden { width: 0px; opacity: 0 !important; padding: 0px; border-width: 0px; max-height: 0px; margin: 0px }
+.sitelist.selected { width: 60%; margin-left: 20%; max-height: none }
 
-.site { padding: 15px; border-top: 1px solid #EEE; display: block; text-decoration: none; color: #333; transition: all 0.3s; white-space: nowrap; }
+.site { padding: 15px; border-top: 1px solid #EEE; display: block; text-decoration: none; color: #333; transition: all 0.3s; white-space: nowrap; font-size: 90% }
 /*.site.my { border-left: 4px solid #e6f2ff; }*/
 .site:hover { background-color: #F8FAFB; transition: none }
 .site:hover .go { color: #666 }
-.site .title { font-weight: bold; font-size: 120%; margin-bottom: 5px; display: inline-block; overflow: hidden; white-space: nowrap; max-width: 90%; text-overflow: ellipsis; border-bottom: 1px solid #FFF }
+.site .title {
+	font-weight: bold; font-size: 120%; margin-bottom: 4px; display: inline-block; overflow: hidden;
+	white-space: nowrap; max-width: 90%; text-overflow: ellipsis; border-bottom: 1px solid #FFF; line-height: 23px;
+}
 .site:hover .title { border-color: #F8FAFB }
 .site:visited .title { /*border-color: #cbcfff;*/ color: #888; }
 .site .description {
-	opacity: 0.8; font-size: 90%; text-overflow: ellipsis; overflow: hidden;
-    -webkit-line-clamp: 2; -webkit-box-orient: vertical; display: -webkit-box; white-space: pre-line; max-height: 37px;
+	color: #555; font-size: 90%; text-overflow: ellipsis; overflow: hidden; line-height: 15px;
+    /*-webkit-line-clamp: 2; -webkit-box-orient: vertical; display: -webkit-box; white-space: pre-line; max-height: 37px;*/
 }
 .site .go { float: right; font-size: 163%; line-height: 43px; vertical-align: middle; color: #D3D9DE }
 .site .tag { display: inline-block; text-transform: uppercase; font-size: 11px; margin-left: 10px; padding: 3px 10px; border-radius: 12px; vertical-align: 12px }
@@ -52,7 +63,7 @@ h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: li
 
 .site .right { float: right; background-color: white; position: relative; transition: all 0.3s; text-align: right }
 .site:hover .right { background-color: #F8FAFB; transition: none }
-.site .star, .site .comments { text-decoration: none; color: #DDD; font-size: 19px; padding: 9px; margin-top: -10px; margin-right: -10px; transition: all 0.3s; display: block }
+.site .star, .site .comments { text-decoration: none; color: #DDD; font-size: 19px; padding: 9px; margin-top: -12px; margin-right: -10px; transition: all 0.3s; display: block }
 .site .star:hover, .site .comments:hover { color: #FF9800; transition: none }
 .site .star:hover .icon { opacity: 1; transition: none }
 .site.starred .star .icon { filter: none }
@@ -68,12 +79,14 @@ h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: li
 .site .peers .icon { opacity: 0.4; transition: all 0.3s; vertical-align: -4px; margin-left: 11px; }
 .site .peers .num { color: #666; font-weight: lighter; font-size: 14px; }
 
+
 @media only screen and (max-width: 1200px) {
 	.sitelist { width: 50% }
+	.sitelists-right { position: relative; }
+	.sitelist.selected { width: 99.8%; margin-left: 0%; }
 }
 @media only screen and (max-width: 720px) {
 	.sitelist { width: 100% }
-	#SiteLists { margin-top: 70px; }
-	.sitelists-right { top: -67px; margin-top: 5px; }
+	.sitelists-right { margin-top: 15px; }
 	.right-link { display: block; margin-bottom: 5px }
 }

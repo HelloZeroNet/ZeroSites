@@ -3,20 +3,33 @@ class SiteLists extends Class
 		@menu_filters = new Menu()
 		@state = null
 		@filter_lang = {}
-		@site_lists = {}
 		@site_add = new SiteAdd()
-		@site_lists = (site_list for key, site_list of @site_lists_db)
+		@site_lists = []
+		@site_lists_db = {}
 		@need_update = false
 
 		@loaded = false
-		@num_found = null
+		@num_total = null
 
 		Page.on_site_info.then =>
 			Page.on_local_storage.then =>
 				@filter_lang = Page.local_storage.filter_lang
 				for [id, title] in Page.site_info.content.settings.categories
-					@site_lists[id] = new SiteList({id: id, title: title, sites: []})
+					site_list = new SiteList({id: id, title: title, sites: []})
+					@site_lists_db[id] = site_list
+					@site_lists.push(site_list)
 				@update()
+
+		window.onresize = =>
+			if window.innerWidth < 720
+				@cols = 1
+			else if window.innerWidth < 1200
+				@cols = 2
+			else
+				@cols = 3
+			@log "Cols: #{@cols}"
+			Page.projector.scheduleRender()
+		window.onresize()
 
 	update: ->
 		if Page.head.active == "new"
@@ -47,12 +60,12 @@ class SiteLists extends Class
 				sites_db[row["category"]].push(row)
 
 			# Sync items
-			for category, site_list of @site_lists
+			for category, site_list of @site_lists_db
 				site_list.item_list.sync(sites_db[category] or [])
 
 			@loaded = true
-			@num_found = rows.length
-			@logEnd "Sites", "found: #{@num_found}"
+			@num_total = rows.length
+			@logEnd "Sites", "found: #{@num_total}"
 
 			Page.projector.scheduleRender()
 
@@ -103,10 +116,22 @@ class SiteLists extends Class
 		else
 			return (lang for lang, _ of @filter_lang).join(", ")
 
+	getVisibleSiteLists: =>
+		if @filter_category
+			return [@site_lists_db[@filter_category]]
+		else
+			return @site_lists
+
 	render: =>
 		if @need_update
 			@need_update = false
 			@update()
+		i = 0
+
+		num_found = 0
+		for site_list in @site_lists
+			if not site_list.isHidden()
+				num_found += site_list.sites.length
 
 		h("div#SiteLists", {classes: {"state-siteadd": @state == "siteadd"}},
 			if @loaded then h("div.sitelists-right", [
@@ -126,10 +151,13 @@ class SiteLists extends Class
 				])
 			])
 			@site_add.render(),
-			if @num_found == 0 and not isEmpty(@filter_lang)
+			if num_found == 0 and not isEmpty(@filter_lang)
 				h("h1.empty", {enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, "No sites found for languages: #{(lang for lang of @filter_lang).join(', ')}")
 			if @loaded then h("div.sitelists", @site_lists.map (site_list) ->
-				site_list.render()
+				if site_list.sites.length
+					i++
+					num_found += site_list.sites.length
+				site_list.render(i)
 			)
 		)
 
