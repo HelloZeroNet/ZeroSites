@@ -8,6 +8,10 @@ class Animation
 		padding_bottom = cstyle.paddingBottom
 		transition = cstyle.transition
 
+		if elem.getBoundingClientRect().top > 1600
+			# console.log "Skip down", elem
+			return
+
 		elem.style.boxSizing = "border-box"
 		elem.style.overflow = "hidden"
 		elem.style.transform = "scale(0.6)"
@@ -41,6 +45,11 @@ class Animation
 
 
 	slideUp: (elem, remove_func, props) ->
+		if elem.getBoundingClientRect().top > 1600
+			remove_func()
+			# console.log "Skip up", elem
+			return
+
 		elem.className += " animate-back"
 		elem.style.boxSizing = "border-box"
 		elem.style.height = elem.offsetHeight+"px"
