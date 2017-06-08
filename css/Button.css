@@ -27,5 +27,5 @@
 .button-submit:hover { color: black; background-color: #fff066 }
 
 .button-small { padding: 7px 20px; margin-left: 10px }
-.button-outline { background-color: white; border: 1px solid #EEE; border-bottom: 2px solid #EEE; color: #AAA; }
-.button-outline:hover { background-color: white; border: 1px solid #CCC; border-bottom: 2px solid #CCC; color: #777 }
+.button-outline { background-color: white; border: 1px solid #EEE; color: #AAA; }
+.button-outline:hover { background-color: white; border: 1px solid #CCC; color: #777 }

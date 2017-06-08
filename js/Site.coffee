@@ -1,5 +1,6 @@
 class Site
 	constructor: (@row) ->
+		@form_edit = null
 		@
 
 	getUri: =>
@@ -37,6 +38,38 @@ class Site
 			starred: Page.user.starred[@getUri()]
 		}
 
+	saveRow: (cb) =>
+		Page.user.getData (data) =>
+			data_row = row for row in data.site when row.site_id == @row.site_id
+			for key, val of @row
+				if data_row[key]
+					data_row[key] = val
+			Page.user.save data, (res) =>
+				Page.site_lists.update()
+				cb?(res)
+
+	deleteRow: (cb) =>
+		Page.user.getData (data) =>
+			data_row_i = i for row, i in data.site when row.site_id == @row.site_id
+			data.site.splice(data_row_i)
+			Page.user.save data, (res) =>
+				Page.site_lists.update()
+				cb?(res)
+
+	handleEditClick: =>
+		if not @form_edit
+			@form_edit = new Form()
+			@form_edit.addField("text", "address", "Address", {placeholder: "e.g. http://127.0.0.1:43110/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8", required: true, validate: @form_edit.shouldBeZite})
+			@form_edit.addField("text", "title", "Title", {placeholder: "e.g. ZeroBlog", required: true})
+			@form_edit.addField("radio", "language", "Language", {required: true, values: Page.languages, classes: {"radiogroup-lang": true}})
+			@form_edit.addField("radio", "category", "Category", {required: true, values: Page.categories})
+			@form_edit.addField("text", "description", "Description", {placeholder: "e.g. ZeroNet changelog and related informations", required: true})
+		@form_edit.setData(@row)
+		@form_edit.saveRow = @saveRow
+		@form_edit.deleteRow = @deleteRow
+		Page.setFormEdit(@form_edit)
+		return false
+
 	render: =>
 		h("a.site.nocomment", { href: Text.fixLink("http://127.0.0.1:43110/"+@row.address), key: @row.site_id, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, classes: @getClasses()}, [
 			h("div.right", [
@@ -56,7 +89,7 @@ class Site
 			h("div.title", @row.title),
 			if @isNew() then h("div.tag.tag-new", "New"),
 			if @row.tags?.indexOf("popular") >= 0 then h("div.tag.tag-popular", "Popular"),
-			if @row.cert_user_id == Page.site_info.cert_user_id then h("div.tag.tag-my", "My"),
+			if @row.cert_user_id == Page.site_info.cert_user_id then h("a.tag.tag-my", {href: "#Edit", onclick: @handleEditClick}, "Edit"),
 			h("div.description", @row.description)
 		])
 

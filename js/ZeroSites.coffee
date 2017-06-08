@@ -50,6 +50,10 @@ class Play extends ZeroFrame
 			Page.projector.scheduleRender()
 		), 60*1000
 
+	setFormEdit: (form_edit) ->
+		form_edit.hidden = false
+		@projector.replace($("#FormEdit"), form_edit.render)
+
 	# Route site urls
 	route: (query) ->
 		@params = Text.parseQuery(query)

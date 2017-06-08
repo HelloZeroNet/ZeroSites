@@ -1,3 +1,14 @@
+.form-takeover-container {
+	width: 100%; height: 100%; position: fixed; background-color: rgba(84,84,84,0.5); z-index: 999; top: 0px
+	background: linear-gradient(35deg, rgb(212, 212, 212), rgba(0, 0, 255, 0.35)); transition: all 0.3s;
+}
+.form-takeover-container.hidden { opacity: 0; pointer-events: none }
+
+.form.form-takeover {
+	text-align: right; max-width: 700px; width: 90%; margin-left: auto; margin-right: auto; background-color: white; padding: 30px; padding-top: 5px; box-sizing: border-box;
+	box-shadow: 0px 0px 100px -20px rgba(0,0,0,0.5); position: relative;
+}
+
 .form .formfield .title {
 	font-size: 13px; text-align: right; margin-top: 40px; text-transform: uppercase; letter-spacing: 2px; display: block;
 	margin-left: 0px; margin-bottom: -31px; width: 17%; margin-right: 10px; box-sizing: border-box; color: #999;
@@ -17,3 +28,5 @@
 
 .form input.text.invalid { border: 1px solid #ee0a73 }
 .form .invalid-reason { position: absolute; margin-right: 30px; display: inline-block; right: 0px; padding: 3px 9px; background-color: #ee0a73; font-size: 13px; color: white; z-index: 999; pointer-events: none }
+.form .cancel { text-decoration: none; color: #AAA; font-weight: bold; font-size: 12px; text-transform: uppercase;}
+.form .cancel:hover { text-decoration: underline }
