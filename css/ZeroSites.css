@@ -1,6 +1,9 @@
 body { background-color: #ECF1F5; font-family: Roboto; margin: 0px; padding: 0px; backface-visibility: hidden; overflow-x: hidden; height: 35000px }
 body.loaded { height: 100%; overflow: auto }
 
+.link { background-color: transparent; outline: 5px solid transparent; transition: all 0.3s }
+.link:active { background-color: #EFEFEF; outline: 5px solid #EFEFEF; transition: none; }
+
 h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: lighter; }
 
 #SiteLists { max-width: 1600px; margin: 0px auto; padding: 20px; position: relative; clear: both; }
@@ -42,9 +45,10 @@ h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: li
 .sitelist.hidden { width: 0px; opacity: 0 !important; padding: 0px; border-width: 0px; max-height: 0px; margin: 0px }
 .sitelist.selected { width: 60%; margin-left: 20%; max-height: none }
 
-.site { padding: 15px; border-top: 1px solid #EEE; display: block; text-decoration: none; color: #333; transition: all 0.3s; white-space: nowrap; font-size: 90% }
+.site { padding: 15px; border-top: 1px solid #EEE; display: block; text-decoration: none; color: #333; transition: all 0.3s; white-space: nowrap; font-size: 90%; backface-visibility: hidden }
 /*.site.my { border-left: 4px solid #e6f2ff; }*/
 .site:hover { background-color: #F8FAFB; transition: none }
+.site:active { transform: translateY(1px); transition: none; box-shadow: inset 0px 7px 25px -5px #E8E8E8; }
 .site:hover .go { color: #666 }
 .site .title {
 	font-weight: bold; font-size: 120%; margin-bottom: 4px; display: inline-block; overflow: hidden;
@@ -57,13 +61,14 @@ h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: li
     /*-webkit-line-clamp: 2; -webkit-box-orient: vertical; display: -webkit-box; white-space: pre-line; max-height: 37px;*/
 }
 .site .go { float: right; font-size: 163%; line-height: 43px; vertical-align: middle; color: #D3D9DE }
-.site .tag { display: inline-block; text-transform: uppercase; font-size: 11px; margin-left: 10px; padding: 3px 10px; border-radius: 12px; vertical-align: 12px }
+.site .tag { display: inline-block; text-transform: uppercase; font-size: 11px; margin-left: 10px; padding: 3px 10px; border-radius: 12px; vertical-align: 12px; text-decoration: none }
 .site .tag-new { color: #2ecc71; border: 1px solid #2ECC71; }
 .site .tag-popular { color: #E91E63; border: 1px solid #F48FB1; }
-.site .tag-my { color: #5d68ff; border: 1px solid #cbcfff; }
+.site .tag-my { color: #5d68ff; border: 1px solid #cbcfff }
+.site .tag-my:hover { text-decoration: underline; }
 
 .site .right { float: right; background-color: white; position: relative; transition: all 0.3s; text-align: right }
-.site:hover .right { background-color: #F8FAFB; transition: none }
+.site:hover .right { background-color: inherit; transition: none }
 .site .star, .site .comments { text-decoration: none; color: #DDD; font-size: 19px; padding: 9px; margin-top: -12px; margin-right: -10px; transition: all 0.3s; display: block }
 .site .star:hover, .site .comments:hover { color: #FF9800; transition: none }
 .site .star:hover .icon { opacity: 1; transition: none }
