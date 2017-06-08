@@ -56,9 +56,9 @@ class Play extends ZeroFrame
 		[page, param] = @params.url.split(":")
 		@content = @site_lists
 		if page == "Category"
-			@site_lists.filter_category = parseInt(param)
+			@site_lists.setFilterCategory(parseInt(param))
 		else
-			@site_lists.filter_category = null
+			@site_lists.setFilterCategory(null)
 		Page.projector.scheduleRender()
 		@log "Route", page, param
 

@@ -116,6 +116,12 @@ class SiteLists extends Class
 		else
 			return (lang for lang, _ of @filter_lang).join(", ")
 
+	setFilterCategory: (@filter_category) =>
+		if @loaded
+			setTimeout ( =>
+				Page.on_loaded.resolve()
+			), 600
+
 	getVisibleSiteLists: =>
 		if @filter_category
 			return [@site_lists_db[@filter_category]]
