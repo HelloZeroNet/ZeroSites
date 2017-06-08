@@ -1,4 +1,5 @@
-body { background-color: #ECF1F5; font-family: Roboto; margin: 0px; padding: 0px; backface-visibility: hidden }
+body { background-color: #ECF1F5; font-family: Roboto; margin: 0px; padding: 0px; backface-visibility: hidden; overflow-x: hidden; height: 35000px }
+body.loaded { height: 100%; overflow: auto }
 
 h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: lighter; }
 

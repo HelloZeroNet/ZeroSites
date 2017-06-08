@@ -66,6 +66,7 @@ class SiteLists extends Class
 			@loaded = true
 			@num_total = rows.length
 			@logEnd "Sites", "found: #{@num_total}"
+			Page.on_loaded.resolve()
 
 			Page.projector.scheduleRender()
 
@@ -108,6 +109,7 @@ class SiteLists extends Class
 			@state = null
 		else
 			@state = "siteadd"
+		@site_add.updateDb()
 		return false
 
 	formatFilterTitle: =>
