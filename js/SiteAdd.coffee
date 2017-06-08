@@ -1,6 +1,7 @@
 class SiteAdd extends Class
 	constructor: ->
 		@form = new Form()
+		@db = {}
 		@submitting = false
 		return @
 
@@ -39,6 +40,7 @@ class SiteAdd extends Class
 				if res == "ok"
 					@close()
 					Page.head.active = "new"
+					Page.setUrl("?Category:#{row_site.category}")
 					setTimeout ( =>
 						@submitting = false
 						@form.reset()
@@ -49,6 +51,24 @@ class SiteAdd extends Class
 
 		return false
 
+	updateDb: =>
+		@site_db = {}
+		Page.cmd "dbQuery", "SELECT * FROM site", (res) =>
+			for row in res
+				address = row.address.match(/([A-Za-z0-9]{26,35}|[A-Za-z0-9\.-]{2,99}\.bit)(.*)/)?[0]
+				address = address.replace(/\/.*/, "")
+				@site_db[address.toLowerCase()] = row
+
+	shouldBeUniqueSite: (value) =>
+		address = value.match(/([A-Za-z0-9]{26,35}|[A-Za-z0-9\.-]{2,99}\.bit)(.*)/)[0]
+		address = address.replace(/\/.*/, "")
+		site = @site_db[address.toLowerCase()]
+		@log address, @site_db
+		if site
+			return "This site is already submitted as #{site.title}!"
+		else
+			return null
+
 	close: =>
 		Page.site_lists.state = null
 		Page.projector.scheduleRender()
@@ -57,7 +77,7 @@ class SiteAdd extends Class
 		h("div.form.form-siteadd", {updateAnimation: Animation.height, classes: {hidden: Page.site_lists.state != "siteadd"}}, [
 			h("div.formfield",
 				@form.h("label.title", {for: "address"}, "Address"),
-				@form.h("input.text", {type: "text", name: "address", placeholder: "e.g. http://127.0.0.1:43110/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8", required: true, validate: @form.shouldBeZite}),
+				@form.h("input.text", {type: "text", name: "address", placeholder: "e.g. http://127.0.0.1:43110/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8", required: true, validate: [@form.shouldBeZite, @shouldBeUniqueSite]}),
 			),
 			h("div.formfield",
 				@form.h("label.title", {for: "title"}, "Title"),
@@ -68,7 +88,6 @@ class SiteAdd extends Class
 				@form.h("div.radiogroup.radiogroup-lang", {name: "language", value: @form.data.language, required: true}, [
 					Page.languages.map (lang) =>
 						[h("a.radio", {key: lang, href: "#"+lang, onclick: @handleRadioLangClick, value: lang, classes: {active: @form.data.language == lang}}, lang), " "]
-					# h("a.radio", {key: "multi", href: "#multi", onclick: @handleRadioLangClick, value: "multi", classes: {active: @form.data.language == "multi"}}, "multi")
 				])
 			),
 			h("div.formfield",
