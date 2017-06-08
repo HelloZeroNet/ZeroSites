@@ -4,8 +4,8 @@
  "description": "Sites of ZeroNet",
  "files": {
   "css/all.css": {
-   "sha512": "6356c618edf0a317fec05aee0fc5179fb920c8b62b55baecf8538cd2c4b35014",
-   "size": 115183
+   "sha512": "940ccfdf626adc9e1e1c2641be122a4d0fabb5e4f206dd18365d7084fdd3238e",
+   "size": 116590
   },
   "dbschema.json": {
    "sha512": "95dee8798b26d729501eb473f6ec9c6802b468c2e3415de0a3c820723a9c5560",
@@ -20,8 +20,8 @@
    "size": 590
   },
   "js/all.js": {
-   "sha512": "096bb4b418ad19cdf7ce1790dfcab28d34caf5fc537030cb599facbe79e8b0ef",
-   "size": 95490
+   "sha512": "4c68c5647606b2ced67c0611cede57ad82abe2325a8be99480ae43e9f0ecb59e",
+   "size": 101400
   },
   "languages/zh-tw.json": {
    "sha512": "2652c2927fc68380c3f4baa60776be1005c66a55dac79bbb64e9686e20e52fcb",
@@ -40,7 +40,7 @@
   }
  },
  "inner_path": "content.json",
- "modified": 1496793938,
+ "modified": 1496850127,
  "postmessage_nonce_security": true,
  "settings": {
   "categories": [
@@ -57,10 +57,9 @@
   ],
   "languages": ["da", "de", "en", "es", "fr", "hu", "it", "nl", "pl", "pt", "pt-br", "ru", "tr", "uk", "zh", "zh-tw", "multi"]
  },
- "sign": [103135800597834701520827872162493645370423308670023927561646854201400226986269, 45652655818329030207935802640288636902177803640862135096157258176715368213698],
  "signers_sign": "GxHBPHPG8y3EJjZTNmvNuDYfl4/lcdE99zbdS06DqLJrTm9VmI26FMgbkT47JwEFyHD4PaE2du1tUJdU24qIqtQ=",
  "signs": {
-  "1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB": "G6WYDdp0rNxa9s+0rEFXMwKCVAeMust3S51tkiNAQ3ZJEOQ2cqXBuDb+ardgXdrsJ7GU54KNzhjUjYhyRvhOw3E="
+  "1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB": "G3FE5WuFWYBLzdbasu8gk0i+IPrz6gluo9LMfFMpjkq6R7SdcYG9Cq31Bemx9cClZH3UY7vvJFkQVxmzMmcdE04="
  },
  "signs_required": 1,
  "title": "ZeroSites",

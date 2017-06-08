@@ -115,6 +115,38 @@
 }).call(this);
 
 
+/* ---- /1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB/js/lib/anime.min.js ---- */
+
+
+/*
+ * Anime v1.0.0
+ * http://anime-js.com
+ * JavaScript animation engine
+ * Copyright (c) 2016 Julian Garnier
+ * http://juliangarnier.com
+ * Released under the MIT license
+ */
+(function(r,n){"function"===typeof define&&define.amd?define([],n):"object"===typeof module&&module.exports?module.exports=n():r.anime=n()})(this,function(){var r={duration:1E3,delay:0,loop:!1,autoplay:!0,direction:"normal",easing:"easeOutElastic",elasticity:400,round:!1,begin:void 0,update:void 0,complete:void 0},n="translateX translateY translateZ rotate rotateX rotateY rotateZ scale scaleX scaleY scaleZ skewX skewY".split(" "),e=function(){return{array:function(a){return Array.isArray(a)},object:function(a){return-1<
+Object.prototype.toString.call(a).indexOf("Object")},html:function(a){return a instanceof NodeList||a instanceof HTMLCollection},node:function(a){return a.nodeType},svg:function(a){return a instanceof SVGElement},number:function(a){return!isNaN(parseInt(a))},string:function(a){return"string"===typeof a},func:function(a){return"function"===typeof a},undef:function(a){return"undefined"===typeof a},"null":function(a){return"null"===typeof a},hex:function(a){return/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a)},
+rgb:function(a){return/^rgb/.test(a)},rgba:function(a){return/^rgba/.test(a)},hsl:function(a){return/^hsl/.test(a)},color:function(a){return e.hex(a)||e.rgb(a)||e.rgba(a)||e.hsl(a)}}}(),z=function(){var a={},b={Sine:function(a){return 1-Math.cos(a*Math.PI/2)},Circ:function(a){return 1-Math.sqrt(1-a*a)},Elastic:function(a,b){if(0===a||1===a)return a;var f=1-Math.min(b,998)/1E3,h=a/1-1;return-(Math.pow(2,10*h)*Math.sin(2*(h-f/(2*Math.PI)*Math.asin(1))*Math.PI/f))},Back:function(a){return a*a*(3*a-2)},
+Bounce:function(a){for(var b,f=4;a<((b=Math.pow(2,--f))-1)/11;);return 1/Math.pow(4,3-f)-7.5625*Math.pow((3*b-2)/22-a,2)}};["Quad","Cubic","Quart","Quint","Expo"].forEach(function(a,d){b[a]=function(a){return Math.pow(a,d+2)}});Object.keys(b).forEach(function(c){var d=b[c];a["easeIn"+c]=d;a["easeOut"+c]=function(a,b){return 1-d(1-a,b)};a["easeInOut"+c]=function(a,b){return.5>a?d(2*a,b)/2:1-d(-2*a+2,b)/2}});a.linear=function(a){return a};return a}(),u=function(a){return e.string(a)?a:a+""},A=function(a){return a.replace(/([a-z])([A-Z])/g,
+"$1-$2").toLowerCase()},B=function(a){if(e.color(a))return!1;try{return document.querySelectorAll(a)}catch(b){return!1}},v=function(a){return a.reduce(function(a,c){return a.concat(e.array(c)?v(c):c)},[])},p=function(a){if(e.array(a))return a;e.string(a)&&(a=B(a)||a);return e.html(a)?[].slice.call(a):[a]},C=function(a,b){return a.some(function(a){return a===b})},N=function(a,b){var c={};a.forEach(function(a){var f=JSON.stringify(b.map(function(b){return a[b]}));c[f]=c[f]||[];c[f].push(a)});return Object.keys(c).map(function(a){return c[a]})},
+D=function(a){return a.filter(function(a,c,d){return d.indexOf(a)===c})},w=function(a){var b={},c;for(c in a)b[c]=a[c];return b},t=function(a,b){for(var c in b)a[c]=e.undef(a[c])?b[c]:a[c];return a},O=function(a){a=a.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,function(a,b,c,e){return b+b+c+c+e+e});var b=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(a);a=parseInt(b[1],16);var c=parseInt(b[2],16),b=parseInt(b[3],16);return"rgb("+a+","+c+","+b+")"},P=function(a){a=/hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g.exec(a);
+var b=parseInt(a[1])/360,c=parseInt(a[2])/100,d=parseInt(a[3])/100;a=function(a,b,c){0>c&&(c+=1);1<c&&--c;return c<1/6?a+6*(b-a)*c:.5>c?b:c<2/3?a+(b-a)*(2/3-c)*6:a};if(0==c)c=d=b=d;else var f=.5>d?d*(1+c):d+c-d*c,h=2*d-f,c=a(h,f,b+1/3),d=a(h,f,b),b=a(h,f,b-1/3);return"rgb("+255*c+","+255*d+","+255*b+")"},k=function(a){return/([\+\-]?[0-9|auto\.]+)(%|px|pt|em|rem|in|cm|mm|ex|pc|vw|vh|deg)?/.exec(a)[2]},E=function(a,b,c){return k(b)?b:-1<a.indexOf("translate")?k(c)?b+k(c):b+"px":-1<a.indexOf("rotate")||
+-1<a.indexOf("skew")?b+"deg":b},F=function(a,b){if((e.node(a)||e.svg(a))&&C(n,b))return"transform";if((e.node(a)||e.svg(a))&&"transform"!==b&&x(a,b))return"css";if((e.node(a)||e.svg(a))&&(a.getAttribute(b)||e.svg(a)&&a[b]))return"attribute";if(!e["null"](a[b])&&!e.undef(a[b]))return"object"},x=function(a,b){if(b in a.style)return getComputedStyle(a).getPropertyValue(A(b))||"0"},Q=function(a,b){var c=-1<b.indexOf("scale")?1:0,d=a.style.transform;if(!d)return c;for(var f=/(\w+)\((.+?)\)/g,h=[],e=[],
+q=[];h=f.exec(d);)e.push(h[1]),q.push(h[2]);d=q.filter(function(a,c){return e[c]===b});return d.length?d[0]:c},G=function(a,b){switch(F(a,b)){case "transform":return Q(a,b);case "css":return x(a,b);case "attribute":return a.getAttribute(b)}return a[b]||0},H=function(a,b,c){if(e.color(b))return b=e.rgb(b)||e.rgba(b)?b:e.hex(b)?O(b):e.hsl(b)?P(b):void 0,b;if(k(b))return b;a=k(a.to)?k(a.to):k(a.from);!a&&c&&(a=k(c));return a?b+a:b},I=function(a){var b=/-?\d*\.?\d+/g;return{original:a,numbers:u(a).match(b)?
+u(a).match(b).map(Number):[0],strings:u(a).split(b)}},R=function(a,b,c){return b.reduce(function(b,f,e){f=f?f:c[e-1];return b+a[e-1]+f})},S=function(a){a=a?v(e.array(a)?a.map(p):p(a)):[];return a.map(function(a,c){return{target:a,id:c}})},T=function(a,b){var c=[],d;for(d in a)if(!r.hasOwnProperty(d)&&"targets"!==d){var f=e.object(a[d])?w(a[d]):{value:a[d]};f.name=d;c.push(t(f,b))}return c},J=function(a,b,c,d){"transform"===c?(c=a+"("+E(a,b.from,b.to)+")",b=a+"("+E(a,b.to)+")"):(a="css"===c?x(d,a):
+void 0,c=H(b,b.from,a),b=H(b,b.to,a));return{from:I(c),to:I(b)}},U=function(a,b){var c=[];a.forEach(function(d,f){var h=d.target;return b.forEach(function(b){var q=F(h,b.name);if(q){var k;k=b.name;var g=b.value,g=p(e.func(g)?g(h,f):g);k={from:1<g.length?g[0]:G(h,k),to:1<g.length?g[1]:g[0]};g=w(b);g.animatables=d;g.type=q;g.from=J(b.name,k,g.type,h).from;g.to=J(b.name,k,g.type,h).to;g.round=e.color(k.from)||g.round?1:0;g.delay=(e.func(g.delay)?g.delay(h,f,a.length):g.delay)/l.speed;g.duration=(e.func(g.duration)?
+g.duration(h,f,a.length):g.duration)/l.speed;c.push(g)}})});return c},V=function(a,b){var c=U(a,b);return N(c,["name","from","to","delay","duration"]).map(function(a){var b=w(a[0]);b.animatables=a.map(function(a){return a.animatables});b.totalDuration=b.delay+b.duration;return b})},y=function(a,b){a.tweens.forEach(function(c){var d=c.from,f=a.duration-(c.delay+c.duration);c.from=c.to;c.to=d;b&&(c.delay=f)});a.reversed=a.reversed?!1:!0},K=function(a){var b=[],c=[];a.tweens.forEach(function(a){if("css"===
+a.type||"transform"===a.type)b.push("css"===a.type?A(a.name):"transform"),a.animatables.forEach(function(a){c.push(a.target)})});return{properties:D(b).join(", "),elements:D(c)}},W=function(a){var b=K(a);b.elements.forEach(function(a){a.style.willChange=b.properties})},X=function(a){K(a).elements.forEach(function(a){a.style.removeProperty("will-change")})},Y=function(a,b){var c=a.path,d=a.value*b,f=function(f){f=f||0;return c.getPointAtLength(1<b?a.value+f:d+f)},e=f(),k=f(-1),f=f(1);switch(a.name){case "translateX":return e.x;
+case "translateY":return e.y;case "rotate":return 180*Math.atan2(f.y-k.y,f.x-k.x)/Math.PI}},Z=function(a,b){var c=Math.min(Math.max(b-a.delay,0),a.duration)/a.duration,d=a.to.numbers.map(function(b,d){var e=a.from.numbers[d],k=z[a.easing](c,a.elasticity),e=a.path?Y(a,k):e+k*(b-e);return e=a.round?Math.round(e*a.round)/a.round:e});return R(d,a.to.strings,a.from.strings)},L=function(a,b){var c=void 0;a.time=Math.min(b,a.duration);a.progress=a.time/a.duration*100;a.tweens.forEach(function(a){a.currentValue=
+Z(a,b);var d=a.currentValue;a.animatables.forEach(function(b){var e=b.id;switch(a.type){case "css":b.target.style[a.name]=d;break;case "attribute":b.target.setAttribute(a.name,d);break;case "object":b.target[a.name]=d;break;case "transform":c||(c={}),c[e]||(c[e]=[]),c[e].push(d)}})});if(c)for(var d in c)a.animatables[d].target.style.transform=c[d].join(" ");a.settings.update&&a.settings.update(a)},M=function(a){var b={};b.animatables=S(a.targets);b.settings=t(a,r);b.properties=T(a,b.settings);b.tweens=
+V(b.animatables,b.properties);b.duration=b.tweens.length?Math.max.apply(Math,b.tweens.map(function(a){return a.totalDuration})):a.duration/l.speed;b.time=0;b.progress=0;b.running=!1;b.ended=!1;return b},m=[],l=function(a){var b=M(a),c={tick:function(){if(b.running){b.ended=!1;c.now=+new Date;c.current=c.last+c.now-c.start;L(b,c.current);var a=b.settings;a.begin&&c.current>=a.delay&&(a.begin(b),a.begin=void 0);c.current>=b.duration?(a.loop?(c.start=+new Date,"alternate"===a.direction&&y(b,!0),e.number(a.loop)&&
+a.loop--,c.raf=requestAnimationFrame(c.tick)):(b.ended=!0,a.complete&&a.complete(b),b.pause()),c.last=0):c.raf=requestAnimationFrame(c.tick)}}};b.seek=function(a){L(b,a/100*b.duration)};b.pause=function(){b.running=!1;cancelAnimationFrame(c.raf);X(b);var a=m.indexOf(b);-1<a&&m.splice(a,1)};b.play=function(a){a&&(b=t(M(t(a,b.settings)),b));b.pause();b.running=!0;c.start=+new Date;c.last=b.ended?0:b.time;a=b.settings;"reverse"===a.direction&&y(b);"alternate"!==a.direction||a.loop||(a.loop=1);W(b);m.push(b);
+c.raf=requestAnimationFrame(c.tick)};b.restart=function(){b.reversed&&y(b);b.pause();b.seek(0);b.play()};b.settings.autoplay&&b.play();return b};l.speed=1;l.list=m;l.remove=function(a){a=v(e.array(a)?a.map(p):p(a));for(var b=m.length-1;0<=b;b--)for(var c=m[b],d=c.tweens.length-1;0<=d;d--)for(var f=c.tweens[d],h=f.animatables.length-1;0<=h;h--)C(a,f.animatables[h].target)&&(f.animatables.splice(h,1),f.animatables.length||c.tweens.splice(d,1),c.tweens.length||c.pause())};l.easings=z;l.getValue=G;l.path=
+function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.random=function(a,b){return Math.floor(Math.random()*(b-a+1))+a};return l});
+
+
 /* ---- /1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB/js/lib/maquette.js ---- */
 
 
@@ -937,7 +969,7 @@
         elem.style.marginBottom = margin_bottom;
         elem.style.paddingTop = padding_top;
         return elem.style.paddingBottom = padding_bottom;
-      }), 1);
+      }), 50);
       return elem.addEventListener("transitionend", function() {
         if (elem.style.pointerEvents === "none") {
           return;
@@ -1000,14 +1032,34 @@
     Animation.prototype.show = function(elem, props) {
       var delay, ref;
       delay = ((ref = arguments[arguments.length - 2]) != null ? ref.delay : void 0) * 1000 || 1;
-      elem.className += " animate";
+      elem.style.transition = "none";
       elem.style.opacity = 0;
       setTimeout((function() {
+        elem.className += " animate";
         return elem.style.opacity = 1;
+      }), 50);
+      return elem.addEventListener("transitionend", function(e) {
+        if (e.propertyName === "opacity" || e.elapsedTime >= 0.3) {
+          elem.classList.remove("animate");
+          elem.style.opacity = null;
+          elem.style.transition = null;
+          return elem.removeEventListener("transitionend", arguments.callee, false);
+        }
+      });
+    };
+
+    Animation.prototype.hide = function(elem, remove_func, props) {
+      var delay, ref;
+      delay = ((ref = arguments[arguments.length - 2]) != null ? ref.delay : void 0) * 1000 || 1;
+      elem.className += " animate";
+      setTimeout((function() {
+        return elem.style.opacity = 0;
       }), delay);
-      return elem.addEventListener("transitionend", function() {
-        elem.classList.remove("animate");
-        return elem.style.opacity = null;
+      return elem.addEventListener("transitionend", function(e) {
+        if (e.propertyName === "opacity") {
+          remove_func();
+          return elem.removeEventListener("transitionend", arguments.callee, false);
+        }
       });
     };
 
@@ -1152,21 +1204,38 @@
     extend(Form, superClass);
 
     function Form() {
+      this.render = bind(this.render, this);
+      this.renderField = bind(this.renderField, this);
+      this.handleRadioClick = bind(this.handleRadioClick, this);
+      this.handleDeleteClick = bind(this.handleDeleteClick, this);
+      this.handleSubmitClick = bind(this.handleSubmitClick, this);
+      this.handleCancelClick = bind(this.handleCancelClick, this);
       this.validate = bind(this.validate, this);
       this.shouldBeZite = bind(this.shouldBeZite, this);
       this.h = bind(this.h, this);
+      this.addField = bind(this.addField, this);
       this.storeNode = bind(this.storeNode, this);
       this.handleInput = bind(this.handleInput, this);
+      this.setData = bind(this.setData, this);
       this.reset = bind(this.reset, this);
+      this.hidden = false;
+      this.attached = false;
       this.reset();
       return this;
     }
 
     Form.prototype.reset = function() {
       this.data = {};
+      this.data_original = {};
       this.inputs = {};
       this.invalid = {};
-      return this.nodes = {};
+      this.nodes = {};
+      return this.fields = [];
+    };
+
+    Form.prototype.setData = function(data) {
+      this.data = data;
+      return this.data_original = JSON.parse(JSON.stringify(data));
     };
 
     Form.prototype.handleInput = function(e) {
@@ -1182,6 +1251,42 @@
       } else {
         return this.nodes[node.attributes.name.value] = node;
       }
+    };
+
+    Form.prototype.addField = function(type, id, title, props) {
+      var key, val;
+      if (props.values && props.values.constructor === Array) {
+        if (props.values.length && props.values[0].constructor !== Array) {
+          props.values = (function() {
+            var i, len, ref, results;
+            ref = props.values;
+            results = [];
+            for (i = 0, len = ref.length; i < len; i++) {
+              key = ref[i];
+              results.push([key, key]);
+            }
+            return results;
+          })();
+        }
+      }
+      if (props.values && props.values.constructor === Object) {
+        props.values = (function() {
+          var ref, results;
+          ref = props.values;
+          results = [];
+          for (key in ref) {
+            val = ref[key];
+            results.push([key, val]);
+          }
+          return results;
+        })();
+      }
+      return this.fields.push({
+        type: type,
+        id: id,
+        title: title,
+        props: props
+      });
     };
 
     Form.prototype.h = function(tag, props, childs) {
@@ -1224,7 +1329,7 @@
     };
 
     Form.prototype.validate = function() {
-      var childs, field_error, name, props, ref, ref1, tag, valid;
+      var childs, field_error, i, len, name, props, ref, ref1, ref2, tag, valid, validate;
       valid = true;
       this.invalid = {};
       ref = this.inputs;
@@ -1235,7 +1340,18 @@
           Animation.shake(this.nodes[props.name]);
           valid = false;
         } else if (props.validate) {
-          field_error = props.validate(props.value);
+          if (props.validate.constructor === Array) {
+            ref2 = props.validate;
+            for (i = 0, len = ref2.length; i < len; i++) {
+              validate = ref2[i];
+              field_error = validate(props.value);
+              if (field_error) {
+                break;
+              }
+            }
+          } else {
+            field_error = props.validate(props.value);
+          }
           if (field_error) {
             valid = false;
             this.invalid[name] = field_error;
@@ -1246,6 +1362,118 @@
       }
       Page.projector.scheduleRender();
       return valid;
+    };
+
+    Form.prototype.handleCancelClick = function() {
+      var key, ref, val;
+      this.hidden = true;
+      ref = this.data_original;
+      for (key in ref) {
+        val = ref[key];
+        this.data[key] = val;
+      }
+      Page.projector.scheduleRender();
+      return false;
+    };
+
+    Form.prototype.handleSubmitClick = function() {
+      if (!this.validate()) {
+        return false;
+      }
+      this.saveRow((function(_this) {
+        return function(res) {
+          if (res === "ok") {
+            _this.hidden = true;
+            return Page.projector.scheduleRender();
+          }
+        };
+      })(this));
+      return false;
+    };
+
+    Form.prototype.handleDeleteClick = function() {
+      Page.cmd("wrapperConfirm", ["Are you sure you want to delete this item?", "Delete"], (function(_this) {
+        return function() {
+          return _this.deleteRow(function(res) {
+            if (res === "ok") {
+              _this.hidden = true;
+              return Page.projector.scheduleRender();
+            }
+          });
+        };
+      })(this));
+      return false;
+    };
+
+    Form.prototype.handleRadioClick = function(e) {
+      var id;
+      id = e.currentTarget.attributes["for"].value;
+      this.data[id] = e.currentTarget.value;
+      this.invalid[id] = false;
+      Page.projector.scheduleRender();
+      return false;
+    };
+
+    Form.prototype.renderField = function(field) {
+      var props, values;
+      props = field.props;
+      props.value = this.data[field.id];
+      props.name = field.id;
+      values = props.values;
+      if (field.type === "radio") {
+        return h("div.formfield", this.h("label.title", {
+          "for": field.id
+        }, field.title), this.h("div.radiogroup", props, [
+          values.map((function(_this) {
+            return function(arg) {
+              var key, value;
+              key = arg[0], value = arg[1];
+              return [
+                h("a.radio", {
+                  "for": props.id,
+                  key: key,
+                  href: "#" + key,
+                  onclick: _this.handleRadioClick,
+                  value: key,
+                  classes: {
+                    active: _this.data[field.id] === key
+                  }
+                }, value), " "
+              ];
+            };
+          })(this))
+        ]));
+      } else {
+        return h("div.formfield", this.h("label.title", {
+          "for": field.id
+        }, field.title), this.h("input.text", props));
+      }
+    };
+
+    Form.prototype.render = function(classname) {
+      if (classname == null) {
+        classname = "";
+      }
+      return h("div.form-takeover-container#FormEdit", {
+        afterCreate: Animation.show,
+        classes: {
+          hidden: this.hidden
+        }
+      }, [
+        h("div.form.form-takeover" + classname, {
+          afterCreate: Animation.slideDown,
+          exitAnimation: Animation.slideUp
+        }, this.fields.map(this.renderField), h("a.cancel.link", {
+          href: "#Cancel",
+          onclick: this.handleCancelClick
+        }, "Cancel"), this.deleteRow ? h("a.button.button-submit.button-outline", {
+          href: "#Delete",
+          onclick: this.handleDeleteClick
+        }, "Delete") : void 0, h("a.button.button-submit", {
+          href: "#Modify",
+          onclick: this.handleSubmitClick
+        }, "Modify"))
+      ]);
     };
 
     return Form;
@@ -2020,13 +2248,17 @@
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Site = (function() {
-    function Site(row) {
-      this.row = row;
+    function Site(row1) {
+      this.row = row1;
       this.render = bind(this.render, this);
+      this.handleEditClick = bind(this.handleEditClick, this);
+      this.deleteRow = bind(this.deleteRow, this);
+      this.saveRow = bind(this.saveRow, this);
       this.getClasses = bind(this.getClasses, this);
       this.handleStarClick = bind(this.handleStarClick, this);
       this.isNew = bind(this.isNew, this);
       this.getUri = bind(this.getUri, this);
+      this.form_edit = null;
       this;
     }
 
@@ -2077,6 +2309,87 @@
       };
     };
 
+    Site.prototype.saveRow = function(cb) {
+      return Page.user.getData((function(_this) {
+        return function(data) {
+          var data_row, j, key, len, ref, ref1, row, val;
+          ref = data.site;
+          for (j = 0, len = ref.length; j < len; j++) {
+            row = ref[j];
+            if (row.site_id === _this.row.site_id) {
+              data_row = row;
+            }
+          }
+          ref1 = _this.row;
+          for (key in ref1) {
+            val = ref1[key];
+            if (data_row[key]) {
+              data_row[key] = val;
+            }
+          }
+          return Page.user.save(data, function(res) {
+            Page.site_lists.update();
+            return typeof cb === "function" ? cb(res) : void 0;
+          });
+        };
+      })(this));
+    };
+
+    Site.prototype.deleteRow = function(cb) {
+      return Page.user.getData((function(_this) {
+        return function(data) {
+          var data_row_i, i, j, len, ref, row;
+          ref = data.site;
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            row = ref[i];
+            if (row.site_id === _this.row.site_id) {
+              data_row_i = i;
+            }
+          }
+          data.site.splice(data_row_i);
+          return Page.user.save(data, function(res) {
+            Page.site_lists.update();
+            return typeof cb === "function" ? cb(res) : void 0;
+          });
+        };
+      })(this));
+    };
+
+    Site.prototype.handleEditClick = function() {
+      if (!this.form_edit) {
+        this.form_edit = new Form();
+        this.form_edit.addField("text", "address", "Address", {
+          placeholder: "e.g. http://127.0.0.1:43110/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8",
+          required: true,
+          validate: this.form_edit.shouldBeZite
+        });
+        this.form_edit.addField("text", "title", "Title", {
+          placeholder: "e.g. ZeroBlog",
+          required: true
+        });
+        this.form_edit.addField("radio", "language", "Language", {
+          required: true,
+          values: Page.languages,
+          classes: {
+            "radiogroup-lang": true
+          }
+        });
+        this.form_edit.addField("radio", "category", "Category", {
+          required: true,
+          values: Page.categories
+        });
+        this.form_edit.addField("text", "description", "Description", {
+          placeholder: "e.g. ZeroNet changelog and related informations",
+          required: true
+        });
+      }
+      this.form_edit.setData(this.row);
+      this.form_edit.saveRow = this.saveRow;
+      this.form_edit.deleteRow = this.deleteRow;
+      Page.setFormEdit(this.form_edit);
+      return false;
+    };
+
     Site.prototype.render = function() {
       var ref;
       return h("a.site.nocomment", {
@@ -2093,7 +2406,10 @@
           }, h("span.num", this.row.star || ""), h("span.icon.icon-star", "")), h("a.comments", {
             href: "#"
           }, h("span.num", "soon"), h("span.icon.icon-comment", "")), this.row.peers ? h("div.peers", h("span.num", this.row.peers), h("span.icon.icon-profile", "")) : void 0
-        ]), h("div.title", this.row.title), this.isNew() ? h("div.tag.tag-new", "New") : void 0, ((ref = this.row.tags) != null ? ref.indexOf("popular") : void 0) >= 0 ? h("div.tag.tag-popular", "Popular") : void 0, this.row.cert_user_id === Page.site_info.cert_user_id ? h("div.tag.tag-my", "My") : void 0, h("div.description", this.row.description)
+        ]), h("div.title", this.row.title), this.isNew() ? h("div.tag.tag-new", "New") : void 0, ((ref = this.row.tags) != null ? ref.indexOf("popular") : void 0) >= 0 ? h("div.tag.tag-popular", "Popular") : void 0, this.row.cert_user_id === Page.site_info.cert_user_id ? h("a.tag.tag-my", {
+          href: "#Edit",
+          onclick: this.handleEditClick
+        }, "Edit") : void 0, h("div.description", this.row.description)
       ]);
     };
 
@@ -2120,10 +2436,13 @@
 
     function SiteAdd() {
       this.close = bind(this.close, this);
+      this.shouldBeUniqueSite = bind(this.shouldBeUniqueSite, this);
+      this.updateDb = bind(this.updateDb, this);
       this.handleSubmit = bind(this.handleSubmit, this);
       this.handleRadioCategoryClick = bind(this.handleRadioCategoryClick, this);
       this.handleRadioLangClick = bind(this.handleRadioLangClick, this);
       this.form = new Form();
+      this.db = {};
       this.submitting = false;
       return this;
     }
@@ -2167,6 +2486,7 @@
             if (res === "ok") {
               _this.close();
               Page.head.active = "new";
+              Page.setUrl("?Category:" + row_site.category);
               return setTimeout((function() {
                 _this.submitting = false;
                 _this.form.reset();
@@ -2179,6 +2499,36 @@
         };
       })(this));
       return false;
+    };
+
+    SiteAdd.prototype.updateDb = function() {
+      this.site_db = {};
+      return Page.cmd("dbQuery", "SELECT * FROM site", (function(_this) {
+        return function(res) {
+          var address, i, len, ref, results, row;
+          results = [];
+          for (i = 0, len = res.length; i < len; i++) {
+            row = res[i];
+            address = (ref = row.address.match(/([A-Za-z0-9]{26,35}|[A-Za-z0-9\.-]{2,99}\.bit)(.*)/)) != null ? ref[0] : void 0;
+            address = address.replace(/\/.*/, "");
+            results.push(_this.site_db[address.toLowerCase()] = row);
+          }
+          return results;
+        };
+      })(this));
+    };
+
+    SiteAdd.prototype.shouldBeUniqueSite = function(value) {
+      var address, site;
+      address = value.match(/([A-Za-z0-9]{26,35}|[A-Za-z0-9\.-]{2,99}\.bit)(.*)/)[0];
+      address = address.replace(/\/.*/, "");
+      site = this.site_db[address.toLowerCase()];
+      this.log(address, this.site_db);
+      if (site) {
+        return "This site is already submitted as " + site.title + "!";
+      } else {
+        return null;
+      }
     };
 
     SiteAdd.prototype.close = function() {
@@ -2200,7 +2550,7 @@
           name: "address",
           placeholder: "e.g. http://127.0.0.1:43110/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8",
           required: true,
-          validate: this.form.shouldBeZite
+          validate: [this.form.shouldBeZite, this.shouldBeUniqueSite]
         })), h("div.formfield", this.form.h("label.title", {
           "for": "title"
         }, "Title"), this.form.h("input.text", {
@@ -2275,6 +2625,7 @@
 }).call(this);
 
 
+
 /* ---- /1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB/js/SiteList.coffee ---- */
 
 
@@ -2339,7 +2690,6 @@
 }).call(this);
 
 
-
 /* ---- /1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB/js/SiteLists.coffee ---- */
 
 
@@ -2355,6 +2705,7 @@
     function SiteLists() {
       this.render = bind(this.render, this);
       this.getVisibleSiteLists = bind(this.getVisibleSiteLists, this);
+      this.setFilterCategory = bind(this.setFilterCategory, this);
       this.formatFilterTitle = bind(this.formatFilterTitle, this);
       this.handleSiteAddClick = bind(this.handleSiteAddClick, this);
       this.handleFiltersClick = bind(this.handleFiltersClick, this);
@@ -2444,6 +2795,7 @@
           _this.loaded = true;
           _this.num_total = rows.length;
           _this.logEnd("Sites", "found: " + _this.num_total);
+          Page.on_loaded.resolve();
           return Page.projector.scheduleRender();
         };
       })(this));
@@ -2515,6 +2867,7 @@
       } else {
         this.state = "siteadd";
       }
+      this.site_add.updateDb();
       return false;
     };
 
@@ -2533,6 +2886,17 @@
           }
           return results;
         }).call(this)).join(", ");
+      }
+    };
+
+    SiteLists.prototype.setFilterCategory = function(filter_category) {
+      this.filter_category = filter_category;
+      if (this.loaded) {
+        return setTimeout(((function(_this) {
+          return function() {
+            return Page.on_loaded.resolve();
+          };
+        })(this)), 600);
       }
     };
 
@@ -2812,15 +3176,20 @@
       }), 60 * 1000);
     };
 
+    Play.prototype.setFormEdit = function(form_edit) {
+      form_edit.hidden = false;
+      return this.projector.replace($("#FormEdit"), form_edit.render);
+    };
+
     Play.prototype.route = function(query) {
       var page, param, ref;
       this.params = Text.parseQuery(query);
       ref = this.params.url.split(":"), page = ref[0], param = ref[1];
       this.content = this.site_lists;
       if (page === "Category") {
-        this.site_lists.filter_category = parseInt(param);
+        this.site_lists.setFilterCategory(parseInt(param));
       } else {
-        this.site_lists.filter_category = null;
+        this.site_lists.setFilterCategory(null);
       }
       Page.projector.scheduleRender();
       return this.log("Route", page, param);
@@ -2853,7 +3222,14 @@
         this.log("save scrollTop", window.pageYOffset);
         this.history_state["scrollTop"] = window.pageYOffset;
         this.cmd("wrapperReplaceState", [this.history_state, null]);
-        window.scroll(window.pageXOffset, 0);
+        if (document.body.scrollTop > 10) {
+          anime({
+            targets: document.body,
+            scrollTop: 0,
+            easing: "easeOutCubic",
+            duration: 300
+          });
+        }
         this.history_state["scrollTop"] = 0;
         this.on_loaded.resolved = false;
         document.body.className = "";
