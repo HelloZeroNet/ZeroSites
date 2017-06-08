@@ -32,7 +32,7 @@ class Animation
 			elem.style.marginBottom = margin_bottom
 			elem.style.paddingTop = padding_top
 			elem.style.paddingBottom = padding_bottom
-		), 1
+		), 50
 
 		elem.addEventListener "transitionend", ->
 			if elem.style.pointerEvents == "none"
@@ -88,17 +88,31 @@ class Animation
 			elem.classList.remove("animate")
 			elem.style.transform = elem.style.opacity = null
 
-
 	show: (elem, props) ->
 		delay = arguments[arguments.length-2]?.delay*1000 or 1
-		elem.className += " animate"
+		elem.style.transition = "none"
 		elem.style.opacity = 0
 		setTimeout (->
+			elem.className += " animate"
 			elem.style.opacity = 1
+		), 50
+		elem.addEventListener "transitionend", (e) ->
+			if e.propertyName == "opacity" or e.elapsedTime >= 0.3
+				elem.classList.remove("animate")
+				elem.style.opacity = null
+				elem.style.transition = null
+				elem.removeEventListener "transitionend", arguments.callee, false
+
+	hide: (elem, remove_func, props) ->
+		delay = arguments[arguments.length-2]?.delay*1000 or 1
+		elem.className += " animate"
+		setTimeout (->
+			elem.style.opacity = 0
 		), delay
-		elem.addEventListener "transitionend", ->
-			elem.classList.remove("animate")
-			elem.style.opacity = null
+		elem.addEventListener "transitionend", (e) ->
+			if e.propertyName == "opacity"
+				remove_func()
+				elem.removeEventListener "transitionend", arguments.callee, false
 
 
 	addVisibleClass: (elem, props) ->
