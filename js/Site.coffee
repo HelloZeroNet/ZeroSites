@@ -51,7 +51,7 @@ class Site
 	deleteRow: (cb) =>
 		Page.user.getData (data) =>
 			data_row_i = i for row, i in data.site when row.site_id == @row.site_id
-			data.site.splice(data_row_i)
+			data.site.splice(data_row_i, 1)
 			Page.user.save data, (res) =>
 				Page.site_lists.update()
 				cb?(res)
@@ -73,7 +73,7 @@ class Site
 	render: =>
 		h("a.site.nocomment", { href: Text.fixLink("http://127.0.0.1:43110/"+@row.address), key: @row.site_id, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, classes: @getClasses()}, [
 			h("div.right", [
-				h("a.star", {href: "#", onclick: @handleStarClick},
+				h("a.star", {href: "#Star", onclick: @handleStarClick},
 					h("span.num", @row.star or "")
 					h("span.icon.icon-star", "")
 				),
