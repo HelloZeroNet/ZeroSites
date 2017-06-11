@@ -20,7 +20,7 @@ class SiteList
 		else
 			clear = (i % Page.site_lists.cols == 1)
 		h("div.sitelist", {key: @row.id, classes: {empty: @sites.length == 0, hidden: @isHidden(), selected: Page.site_lists.filter_category == @row.id, clear: clear},}, [
-			h("h2", @row.title),
+			h("a.categoryname", {href: "?Category:#{@row.id}:#{Text.toUrl(@row.title)}", onclick: Page.handleLinkClick}, @row.title),
 			h("div.sites", [
 				@sites[0..limit-1].map (item) ->
 					item.render()
