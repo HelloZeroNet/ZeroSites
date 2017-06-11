@@ -90,7 +90,7 @@ class Play extends ZeroFrame
 			@history_state["scrollTop"] = window.pageYOffset
 			@cmd "wrapperReplaceState", [@history_state, null]
 
-			if document.body.scrollTop > 10
+			if document.body.scrollTop > 100
 				anime({targets: document.body, scrollTop: 0, easing: "easeOutCubic", duration: 300})
 
 			@history_state["scrollTop"] = 0
