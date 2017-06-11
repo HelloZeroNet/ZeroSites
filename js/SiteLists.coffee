@@ -167,6 +167,7 @@ class SiteLists extends Class
 					num_found += site_list.sites.length
 				site_list.render(i)
 			)
+			h("div.clear", " ")
 		)
 
 	onSiteInfo: (site_info) ->
