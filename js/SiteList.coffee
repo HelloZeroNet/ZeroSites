@@ -3,6 +3,7 @@ class SiteList
 		@item_list = new ItemList(Site, "site_id")
 		@sites = @item_list.items
 		@item_list.sync(@row.sites)
+		@limit = 10
 
 	isHidden: ->
 		if Page.site_lists.filter_category == null
@@ -10,24 +11,29 @@ class SiteList
 		else
 			return Page.site_lists.filter_category != @row.id
 
+	handleMoreClick: =>
+		@limit += 20
+		@nolimit = true
+		return false
+
 	render: (i) ->
 		if @row.title == "Other" and Page.site_lists.filter_category != @row.id and Page.site_lists.cols == 3
 			return @renderWide(i)
 		if Page.site_lists.filter_category == @row.id
 			limit = 100
 		else
-			limit = 10
+			limit = @limit
 		if @sites.length == 0
 			clear = false
 		else
 			clear = (i % Page.site_lists.cols == 1)
-		h("div.sitelist", {key: @row.id, classes: {empty: @sites.length == 0, hidden: @isHidden(), selected: Page.site_lists.filter_category == @row.id, clear: clear},}, [
+		h("div.sitelist", {key: @row.id, classes: {empty: @sites.length == 0, hidden: @isHidden(), selected: Page.site_lists.filter_category == @row.id, nolimit: @nolimit, clear: clear},}, [
 			h("a.categoryname", {href: "?Category:#{@row.id}:#{Text.toUrl(@row.title)}", onclick: Page.handleLinkClick}, @row.title),
 			h("div.sites", [
 				@sites[0..limit-1].map (item) ->
 					item.render()
 				if @sites.length > limit
-					h("a.more", {href: "?Category:#{@row.id}:#{Text.toUrl(@row.title)}", onclick: Page.handleLinkClick, enterAnimation: Animation.slideDown}, "Show more...")
+					h("a.more", {href: "?Category:#{@row.id}:#{Text.toUrl(@row.title)}", onclick: @handleMoreClick, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp}, "Show more...")
 			])
 		])
 
