@@ -34,17 +34,19 @@ class Site
 
 	getClasses: =>
 		return {
-			my: @row.cert_user_id == Page.site_info.cert_user_id
+			my: @row.cert_user_id == Page.site_info.cert_user_id or Page.site_info.settings.own
 			starred: Page.user.starred[@getUri()]
 		}
 
 	saveRow: (cb) =>
-		Page.user.getData (data) =>
+		user = new User(@row.directory)
+		debugger
+		user.getData (data) =>
 			data_row = row for row in data.site when row.site_id == @row.site_id
 			for key, val of @row
 				if data_row[key]
 					data_row[key] = val
-			Page.user.save data, (res) =>
+			user.save data, (res) =>
 				Page.site_lists.update()
 				cb?(res)
 
@@ -71,6 +73,8 @@ class Site
 		return false
 
 	render: =>
+		my = @row.cert_user_id == Page.site_info.cert_user_id or Page.site_info.settings.own
+
 		h("a.site.nocomment", { href: Text.fixLink("http://127.0.0.1:43110/"+@row.address), key: @row.site_id, enterAnimation: Animation.slideDown, exitAnimation: Animation.slideUp, classes: @getClasses()}, [
 			h("div.right", [
 				h("a.star", {href: "#Star", onclick: @handleStarClick},
@@ -89,7 +93,7 @@ class Site
 			h("div.title", @row.title),
 			if @isNew() then h("div.tag.tag-new", "New"),
 			if @row.tags?.indexOf("popular") >= 0 then h("div.tag.tag-popular", "Popular"),
-			if @row.cert_user_id == Page.site_info.cert_user_id then h("a.tag.tag-my", {href: "#Edit", onclick: @handleEditClick}, "Edit"),
+			if my then h("a.tag.tag-my", {href: "#Edit:#{@row.site_uri}", onclick: @handleEditClick}, "Edit"),
 			h("div.description", @row.description)
 		])
 
