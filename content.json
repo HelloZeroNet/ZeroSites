@@ -45,14 +45,14 @@
  "settings": {
   "categories": [
    [2, "Blogs"],
-   [10, "Chat"],
+   [9, "Services"],
    [1, "Forums, Boards"],
-   [6, "Gif, Image"],
+   [10, "Chat"],
+   [6, "Video, Image"],
    [8, "Guides"],
    [7, "News"],
    [5, "Politics"],
    [4, "Porn"],
-   [9, "Services"],
    [3, "Other"]
   ],
   "languages": ["da", "de", "en", "es", "fr", "hu", "it", "nl", "pl", "pt", "pt-br", "ru", "tr", "uk", "zh", "zh-tw", "multi"]
