@@ -6,7 +6,8 @@ class User extends Class
 
 	setAuthAddress: (auth_address) ->
 		@auth_address = auth_address
-		@updateStarred()
+		if Page.site_info.auth_address == auth_address
+			@updateStarred()
 
 	updateStarred: (cb) ->
 		@starred = {}
