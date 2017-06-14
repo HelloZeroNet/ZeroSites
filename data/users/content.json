@@ -21,7 +21,8 @@
   "permission_rules": {
    ".*": {
     "files_allowed": "data.json",
-    "max_size": 10000
+    "max_size": 10000,
+    "signers": ["1J3rJ8ecnwH2EPYa6MrgZttBNc61ACFiCj"]
    },
    "bitid/.*@zeroid.bit": {"max_size": 20000}
   },
