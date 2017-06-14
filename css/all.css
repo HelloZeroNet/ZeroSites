@@ -213,9 +213,11 @@ body.loaded { height: 100%; overflow: auto }
 .link { background-color: transparent; outline: 5px solid transparent; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
 .link:active { background-color: #EFEFEF; outline: 5px solid #EFEFEF; -webkit-transition: none; -moz-transition: none; -o-transition: none; -ms-transition: none; transition: none ; }
 
+.clear { clear: both }
+
 h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: lighter; }
 
-#SiteLists { max-width: 1600px; margin: 0px auto; padding: 20px; position: relative; clear: both; }
+#SiteLists { max-width: 1600px; margin: 0px auto; padding: 20px; position: relative; clear: both; margin-bottom: 100px }
 #SiteLists .menu { margin-top: 30px; width: 350px; }
 #SiteLists .menu .all { width: 97.8%; margin-left: 7px }
 #SiteLists .sitelists { -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
@@ -242,17 +244,24 @@ h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: li
 
 .sitelist {
 	width: 33.33%; background-color: white; padding: 10px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px ; border: 1px solid #E8EDF1; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; text-align: left;
-	-webkit-box-shadow: 0px 5px 11px -3px rgba(0,0,0,0.1); -moz-box-shadow: 0px 5px 11px -3px rgba(0,0,0,0.1); -o-box-shadow: 0px 5px 11px -3px rgba(0,0,0,0.1); -ms-box-shadow: 0px 5px 11px -3px rgba(0,0,0,0.1); box-shadow: 0px 5px 11px -3px rgba(0,0,0,0.1) ; display: block; vertical-align: top; margin-bottom: 10px; margin-left: -1px; max-height: 900px; float: left;
+	-webkit-box-shadow: 2px 5px 11px -3px rgba(0,0,0,0.1); -moz-box-shadow: 2px 5px 11px -3px rgba(0,0,0,0.1); -o-box-shadow: 2px 5px 11px -3px rgba(0,0,0,0.1); -ms-box-shadow: 2px 5px 11px -3px rgba(0,0,0,0.1); box-shadow: 2px 5px 11px -3px rgba(0,0,0,0.1) ; display: block; vertical-align: top; margin-bottom: 10px; margin-left: -1px; max-height: 900px; float: left;
 }
-.sitelist.clear { clear: both }
-.sitelist h2 { font-weight: 100; font-size: 24px; margin: 12px; color: #E91E63; }
+.sitelist-wide .more { text-align: center; display: block; color: #ee0a73; clear: both; padding: 20px; -webkit-transform: translateY(0px); -moz-transform: translateY(0px); -o-transform: translateY(0px); -ms-transform: translateY(0px); transform: translateY(0px) ; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; }
+.sitelist-wide .sitelist { border-left-color: transparent; }
+.sitelist.col-1 .categoryname, .sitelist.col-2 .categoryname { visibility: hidden }
+
+.sitelist .categoryname { font-weight: 100; font-size: 24px; margin: 12px; color: #E91E63; display: block; text-decoration: none }
 .sitelist .more {
 	text-align: center; display: block; color: #ee0a73; text-decoration: none; padding: 10px;
 	-webkit-transform: translateY(0px); -moz-transform: translateY(0px); -o-transform: translateY(0px); -ms-transform: translateY(0px); transform: translateY(0px) ; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; -webkit-box-shadow: 0px -20px 75px 17px #FFF; -moz-box-shadow: 0px -20px 75px 17px #FFF; -o-box-shadow: 0px -20px 75px 17px #FFF; -ms-box-shadow: 0px -20px 75px 17px #FFF; box-shadow: 0px -20px 75px 17px #FFF ;
 }
 .sitelist .more:hover { text-decoration: underline; -webkit-transform: translateY(3px); -moz-transform: translateY(3px); -o-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px) ; -webkit-box-shadow: 0px 0px 75px 17px #FFF; -moz-box-shadow: 0px 0px 75px 17px #FFF; -o-box-shadow: 0px 0px 75px 17px #FFF; -ms-box-shadow: 0px 0px 75px 17px #FFF; box-shadow: 0px 0px 75px 17px #FFF ; }
-.sitelist.hidden { width: 0px; opacity: 0 !important; padding: 0px; border-width: 0px; max-height: 0px; margin: 0px }
+
+.sitelist-wide .more:hover { text-decoration: underline; -webkit-transform: translateY(3px); -moz-transform: translateY(3px); -o-transform: translateY(3px); -ms-transform: translateY(3px); transform: translateY(3px) ; }
+
+.sitelist.hidden { width: 0px; opacity: 0 !important; padding: 0px; border-width: 0px; max-height: 0px !important; margin: 0px }
 .sitelist.selected { width: 60%; margin-left: 20%; max-height: none }
+.sitelist.nolimit { max-height: none }
 
 .site { padding: 15px; border-top: 1px solid #EEE; display: block; text-decoration: none; color: #333; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; white-space: nowrap; font-size: 90%; -webkit-backface-visibility: hidden ; -moz-backface-visibility: hidden ; -o-backface-visibility: hidden ; -ms-backface-visibility: hidden ; backface-visibility: hidden  }
 /*.site.my { border-left: 4px solid #e6f2ff; }*/
@@ -261,7 +270,7 @@ h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: li
 .site:hover .go { color: #666 }
 .site .title {
 	font-weight: bold; font-size: 120%; margin-bottom: 4px; display: inline-block; overflow: hidden;
-	white-space: nowrap; max-width: 90%; text-overflow: ellipsis; border-bottom: 1px solid #FFF; line-height: 23px;
+	white-space: nowrap; max-width: 88%; text-overflow: ellipsis; border-bottom: 1px solid #FFF; line-height: 22px;
 }
 .site:hover .title { border-color: #F8FAFB }
 .site:visited .title { /*border-color: #cbcfff;*/ color: #888; }
@@ -273,10 +282,11 @@ h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: li
 .site .tag { display: inline-block; text-transform: uppercase; font-size: 11px; margin-left: 10px; padding: 3px 10px; -webkit-border-radius: 12px; -moz-border-radius: 12px; -o-border-radius: 12px; -ms-border-radius: 12px; border-radius: 12px ; vertical-align: 12px; text-decoration: none }
 .site .tag-new { color: #2ecc71; border: 1px solid #2ECC71; }
 .site .tag-popular { color: #E91E63; border: 1px solid #F48FB1; }
+.site.my:hover .tag-my { z-index: 999; position: relative; background-color: white; }
 .site .tag-my { color: #5d68ff; border: 1px solid #cbcfff }
 .site .tag-my:hover { text-decoration: underline; }
 
-.site .right { float: right; background-color: white; position: relative; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; text-align: right }
+.site .right { float: right; background-color: white; position: relative; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; text-align: right; padding-right: 15px; margin-right: -15px; }
 .site:hover .right { background-color: inherit; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
 .site .star, .site .comments { text-decoration: none; color: #DDD; font-size: 19px; padding: 9px; margin-top: -12px; margin-right: -10px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; display: block }
 .site .star:hover, .site .comments:hover { color: #FF9800; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }

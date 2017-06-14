@@ -98,8 +98,7 @@
   .then (res) ->
   	log "Back then", res
   
-  log "Query started", back
-   */
+  log "Query started", back */
 
 }).call(this);
 
@@ -1290,20 +1289,29 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
     };
 
     Form.prototype.h = function(tag, props, childs) {
+      var ref, ref1, ref2, ref3;
       this.inputs[props.name] = [tag, props, childs];
-      if (props.value == null) {
+            if ((ref = props.value) != null) {
+        ref;
+      } else {
         props.value = this.data[props.name];
-      }
-      if (props.id == null) {
+      };
+            if ((ref1 = props.id) != null) {
+        ref1;
+      } else {
         props.id = props.name;
-      }
-      if (props.oninput == null) {
+      };
+            if ((ref2 = props.oninput) != null) {
+        ref2;
+      } else {
         props.oninput = this.handleInput;
-      }
+      };
       props.afterCreate = this.storeNode;
-      if (props.classes == null) {
+            if ((ref3 = props.classes) != null) {
+        ref3;
+      } else {
         props.classes = {};
-      }
+      };
       if (this.invalid[props.name] || this.invalid[props["for"]]) {
         props.classes.invalid = true;
       } else {
@@ -2304,13 +2312,16 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
 
     Site.prototype.getClasses = function() {
       return {
-        my: this.row.cert_user_id === Page.site_info.cert_user_id,
+        my: this.row.cert_user_id === Page.site_info.cert_user_id || Page.site_info.settings.own,
         starred: Page.user.starred[this.getUri()]
       };
     };
 
     Site.prototype.saveRow = function(cb) {
-      return Page.user.getData((function(_this) {
+      var user;
+      user = new User(this.row.directory);
+      debugger;
+      return user.getData((function(_this) {
         return function(data) {
           var data_row, j, key, len, ref, ref1, row, val;
           ref = data.site;
@@ -2327,7 +2338,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
               data_row[key] = val;
             }
           }
-          return Page.user.save(data, function(res) {
+          return user.save(data, function(res) {
             Page.site_lists.update();
             return typeof cb === "function" ? cb(res) : void 0;
           });
@@ -2346,7 +2357,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
               data_row_i = i;
             }
           }
-          data.site.splice(data_row_i);
+          data.site.splice(data_row_i, 1);
           return Page.user.save(data, function(res) {
             Page.site_lists.update();
             return typeof cb === "function" ? cb(res) : void 0;
@@ -2391,7 +2402,8 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
     };
 
     Site.prototype.render = function() {
-      var ref;
+      var my, ref;
+      my = this.row.cert_user_id === Page.site_info.cert_user_id || Page.site_info.settings.own;
       return h("a.site.nocomment", {
         href: Text.fixLink("http://127.0.0.1:43110/" + this.row.address),
         key: this.row.site_id,
@@ -2401,13 +2413,13 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       }, [
         h("div.right", [
           h("a.star", {
-            href: "#",
+            href: "#Star",
             onclick: this.handleStarClick
           }, h("span.num", this.row.star || ""), h("span.icon.icon-star", "")), h("a.comments", {
             href: "#"
           }, h("span.num", "soon"), h("span.icon.icon-comment", "")), this.row.peers ? h("div.peers", h("span.num", this.row.peers), h("span.icon.icon-profile", "")) : void 0
-        ]), h("div.title", this.row.title), this.isNew() ? h("div.tag.tag-new", "New") : void 0, ((ref = this.row.tags) != null ? ref.indexOf("popular") : void 0) >= 0 ? h("div.tag.tag-popular", "Popular") : void 0, this.row.cert_user_id === Page.site_info.cert_user_id ? h("a.tag.tag-my", {
-          href: "#Edit",
+        ]), h("div.title", this.row.title), this.isNew() ? h("div.tag.tag-new", "New") : void 0, ((ref = this.row.tags) != null ? ref.indexOf("popular") : void 0) >= 0 ? h("div.tag.tag-popular", "Popular") : void 0, my ? h("a.tag.tag-my", {
+          href: "#Edit:" + this.row.site_uri,
           onclick: this.handleEditClick
         }, "Edit") : void 0, h("div.description", this.row.description)
       ]);
@@ -2625,19 +2637,21 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
 }).call(this);
 
 
-
 /* ---- /1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB/js/SiteList.coffee ---- */
 
 
 (function() {
-  var SiteList;
+  var SiteList,
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   SiteList = (function() {
     function SiteList(row) {
       this.row = row;
+      this.handleMoreClick = bind(this.handleMoreClick, this);
       this.item_list = new ItemList(Site, "site_id");
       this.sites = this.item_list.items;
       this.item_list.sync(this.row.sites);
+      this.limit = 10;
     }
 
     SiteList.prototype.isHidden = function() {
@@ -2648,12 +2662,21 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       }
     };
 
+    SiteList.prototype.handleMoreClick = function() {
+      this.limit += 20;
+      this.nolimit = true;
+      return false;
+    };
+
     SiteList.prototype.render = function(i) {
       var clear, limit;
+      if (this.row.title === "Other" && Page.site_lists.filter_category !== this.row.id && Page.site_lists.cols === 3) {
+        return this.renderWide(i);
+      }
       if (Page.site_lists.filter_category === this.row.id) {
         limit = 100;
       } else {
-        limit = 6;
+        limit = this.limit;
       }
       if (this.sites.length === 0) {
         clear = false;
@@ -2666,18 +2689,58 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
           empty: this.sites.length === 0,
           hidden: this.isHidden(),
           selected: Page.site_lists.filter_category === this.row.id,
+          nolimit: this.nolimit,
           clear: clear
         }
       }, [
-        h("h2", this.row.title), h("div.sites", [
-          this.sites.slice(0, +limit + 1 || 9e9).map(function(item) {
+        h("a.categoryname", {
+          href: "?Category:" + this.row.id + ":" + (Text.toUrl(this.row.title)),
+          onclick: Page.handleLinkClick
+        }, this.row.title), h("div.sites", [
+          this.sites.slice(0, +(limit - 1) + 1 || 9e9).map(function(item) {
             return item.render();
           }), this.sites.length > limit ? h("a.more", {
             href: "?Category:" + this.row.id + ":" + (Text.toUrl(this.row.title)),
-            onclick: Page.handleLinkClick,
-            enterAnimation: Animation.slideDown
+            onclick: this.handleMoreClick,
+            enterAnimation: Animation.slideDown,
+            exitAnimation: Animation.slideUp
           }, "Show more...") : void 0
         ])
+      ]);
+    };
+
+    SiteList.prototype.renderWide = function(i) {
+      var clear, cols, limit;
+      cols = [0, 1, 2];
+      clear = false;
+      limit = 10;
+      return h("div.sitelist-wide", [
+        cols.map((function(_this) {
+          return function(col) {
+            return h("div.sitelist.col-" + col, {
+              key: _this.row.id,
+              classes: {
+                empty: _this.sites.length === 0,
+                hidden: _this.isHidden(),
+                selected: Page.site_lists.filter_category === _this.row.id,
+                clear: clear
+              }
+            }, [
+              h("a.categoryname", {
+                href: "?Category:" + _this.row.id + ":" + (Text.toUrl(_this.row.title)),
+                onclick: Page.handleLinkClick
+              }, _this.row.title), h("div.sites", [
+                _this.sites.slice(0 + col * limit, +(col * limit + limit - 1) + 1 || 9e9).map(function(item) {
+                  return item.render();
+                })
+              ])
+            ]);
+          };
+        })(this)), this.sites.length > limit * cols.length ? h("a.more", {
+          href: "?Category:" + this.row.id + ":" + (Text.toUrl(this.row.title)),
+          onclick: this.handleMoreClick,
+          enterAnimation: Animation.slideDown
+        }, "Show more...") : void 0
       ]);
     };
 
@@ -2688,6 +2751,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
   window.SiteList = SiteList;
 
 }).call(this);
+
 
 
 /* ---- /1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB/js/SiteLists.coffee ---- */
@@ -2955,7 +3019,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
           num_found += site_list.sites.length;
         }
         return site_list.render(i);
-      })) : void 0);
+      })) : void 0, h("div.clear", " "));
     };
 
     SiteLists.prototype.onSiteInfo = function(site_info) {
@@ -3005,7 +3069,9 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
 
     User.prototype.setAuthAddress = function(auth_address) {
       this.auth_address = auth_address;
-      return this.updateStarred();
+      if (Page.site_info.auth_address === auth_address) {
+        return this.updateStarred();
+      }
     };
 
     User.prototype.updateStarred = function(cb) {
@@ -3222,7 +3288,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
         this.log("save scrollTop", window.pageYOffset);
         this.history_state["scrollTop"] = window.pageYOffset;
         this.cmd("wrapperReplaceState", [this.history_state, null]);
-        if (document.body.scrollTop > 10) {
+        if (document.body.scrollTop > 100) {
           anime({
             targets: document.body,
             scrollTop: 0,
@@ -3258,15 +3324,19 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
         return function() {
           _this.log("Loading localstorage");
           return _this.cmd("wrapperGetLocalStorage", [], function(local_storage) {
-            var base1;
+            var base1, ref, ref1;
             _this.local_storage = local_storage;
             _this.log("Loaded localstorage");
-            if (_this.local_storage == null) {
+                        if ((ref = _this.local_storage) != null) {
+              ref;
+            } else {
               _this.local_storage = {};
-            }
-            if ((base1 = _this.local_storage).filter_lang == null) {
+            };
+                        if ((ref1 = (base1 = _this.local_storage).filter_lang) != null) {
+              ref1;
+            } else {
               base1.filter_lang = {};
-            }
+            };
             return _this.on_local_storage.resolve();
           });
         };
