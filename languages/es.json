@@ -1,0 +1,22 @@
+{
+	"Invalid site address: only ZeroNet addresses supported": "Dirección de pagina web invalida: solo se soportan direcciones de ZeroNet",
+	"This field is required": "Este campo es requerido",
+
+	"Popular": "Popular",
+	"New": "Nuevo",
+
+	"Address": "Dirección",
+	"e.g. http://127.0.0.1:43110/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "e.j. http://127.0.0.1:43110/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8",
+	"Title": "Título",
+	"e.g. ZeroBlog": "e.j. ZeroBlog",
+	"Language": "Lenguaje",
+	"Category": "Categoria",
+	"Description": "Descripción",
+	"e.g. ZeroNet changelog and related informations": "e.j. Zeronet notas de cambios e informaciones relacionadas",
+	"Submit": "Enviar",
+
+	"Site languages: ": "Lenguaje de sitio",
+	"User: ": "Usuario: ",
+	"Filter: ": "Filtro: ",
+	"Submit new site": "Enviar nuevo sitio"
+}
