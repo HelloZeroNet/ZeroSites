@@ -35,7 +35,7 @@ class SiteLists extends Class
 		if Page.head.active == "new"
 			order = "date_added DESC"
 		else
-			order = "peers DESC, title"
+			order = "MIN(200, peers) + star * 20 DESC, title"
 
 		filters = []
 		if not isEmpty(@filter_lang)
