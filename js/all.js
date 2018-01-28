@@ -2320,7 +2320,6 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
     Site.prototype.saveRow = function(cb) {
       var user;
       user = new User(this.row.directory);
-      debugger;
       return user.getData((function(_this) {
         return function(data) {
           var data_row, j, key, len, ref, ref1, row, val;
@@ -2432,6 +2431,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
   window.Site = Site;
 
 }).call(this);
+
 
 
 /* ---- /1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB/js/SiteAdd.coffee ---- */
@@ -2642,9 +2642,13 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
 
 (function() {
   var SiteList,
-    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
-  SiteList = (function() {
+  SiteList = (function(superClass) {
+    extend(SiteList, superClass);
+
     function SiteList(row) {
       this.row = row;
       this.handleMoreClick = bind(this.handleMoreClick, this);
@@ -2713,7 +2717,10 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       var clear, cols, limit;
       cols = [0, 1, 2];
       clear = false;
-      limit = 10;
+      limit = this.limit;
+      if (this.sites.length < limit * 3) {
+        limit = Math.ceil(this.sites.length / 3);
+      }
       return h("div.sitelist-wide", [
         cols.map((function(_this) {
           return function(col) {
@@ -2746,12 +2753,11 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
 
     return SiteList;
 
-  })();
+  })(Class);
 
   window.SiteList = SiteList;
 
 }).call(this);
-
 
 
 /* ---- /1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB/js/SiteLists.coffee ---- */
@@ -2825,7 +2831,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       if (Page.head.active === "new") {
         order = "date_added DESC";
       } else {
-        order = "peers DESC, title";
+        order = "MIN(200, peers) + star * 20 DESC, title";
       }
       filters = [];
       if (!isEmpty(this.filter_lang)) {
@@ -3324,19 +3330,15 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
         return function() {
           _this.log("Loading localstorage");
           return _this.cmd("wrapperGetLocalStorage", [], function(local_storage) {
-            var base1, ref, ref1;
+            var base1;
             _this.local_storage = local_storage;
             _this.log("Loaded localstorage");
-                        if ((ref = _this.local_storage) != null) {
-              ref;
-            } else {
+            if (_this.local_storage == null) {
               _this.local_storage = {};
-            };
-                        if ((ref1 = (base1 = _this.local_storage).filter_lang) != null) {
-              ref1;
-            } else {
+            }
+            if ((base1 = _this.local_storage).filter_lang == null) {
               base1.filter_lang = {};
-            };
+            }
             return _this.on_local_storage.resolve();
           });
         };
@@ -3399,7 +3401,8 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       this.site_info = site_info;
       this.on_site_info.resolve();
       this.site_lists.onSiteInfo(site_info);
-      return this.user.onSiteInfo(site_info);
+      this.user.onSiteInfo(site_info);
+      return this.projector.scheduleRender();
     };
 
     Play.prototype.setServerInfo = function(server_info) {
