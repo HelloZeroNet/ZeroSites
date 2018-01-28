@@ -171,5 +171,5 @@ class ZeroSites extends ZeroFrame
 	returnFalse: ->
 		return false
 
-window.Page = new Play()
+window.Page = new ZeroSites()
 window.Page.createProjector()

@@ -39,7 +39,7 @@ h1 { text-align: center; font-family: Roboto; margin-top: 100px; font-weight: li
 }
 .sitelist-wide { clear: both; }
 .sitelist-wide .more { text-align: center; display: block; color: #ee0a73; clear: both; padding: 20px; transform: translateY(0px); transition: all 0.3s; }
-.sitelist-wide .sitelist { border-left-color: transparent; }
+.sitelist-wide .sitelist { border-left-color: transparent; max-height: initial }
 .sitelist.col-1 .categoryname, .sitelist.col-2 .categoryname { visibility: hidden }
 
 .sitelist .categoryname { font-weight: 100; font-size: 24px; margin: 12px; color: #E91E63; display: block; text-decoration: none }

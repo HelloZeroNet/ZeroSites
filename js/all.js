@@ -2433,7 +2433,6 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
 }).call(this);
 
 
-
 /* ---- /1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB/js/SiteAdd.coffee ---- */
 
 
@@ -3177,25 +3176,25 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
 
 
 (function() {
-  var Play,
+  var ZeroSites,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
   window.h = maquette.h;
 
-  Play = (function(superClass) {
-    extend(Play, superClass);
+  ZeroSites = (function(superClass) {
+    extend(ZeroSites, superClass);
 
-    function Play() {
+    function ZeroSites() {
       this.reloadServerInfo = bind(this.reloadServerInfo, this);
       this.reloadSiteInfo = bind(this.reloadSiteInfo, this);
       this.onOpenWebsocket = bind(this.onOpenWebsocket, this);
       this.handleLinkClick = bind(this.handleLinkClick, this);
-      return Play.__super__.constructor.apply(this, arguments);
+      return ZeroSites.__super__.constructor.apply(this, arguments);
     }
 
-    Play.prototype.init = function() {
+    ZeroSites.prototype.init = function() {
       this.params = {};
       this.site_info = null;
       this.server_info = null;
@@ -3220,7 +3219,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       })(this));
     };
 
-    Play.prototype.createProjector = function() {
+    ZeroSites.prototype.createProjector = function() {
       var url;
       this.projector = maquette.createProjector();
       this.head = new Head();
@@ -3248,12 +3247,12 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       }), 60 * 1000);
     };
 
-    Play.prototype.setFormEdit = function(form_edit) {
+    ZeroSites.prototype.setFormEdit = function(form_edit) {
       form_edit.hidden = false;
       return this.projector.replace($("#FormEdit"), form_edit.render);
     };
 
-    Play.prototype.route = function(query) {
+    ZeroSites.prototype.route = function(query) {
       var page, param, ref;
       this.params = Text.parseQuery(query);
       ref = this.params.url.split(":"), page = ref[0], param = ref[1];
@@ -3267,7 +3266,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       return this.log("Route", page, param);
     };
 
-    Play.prototype.setUrl = function(url, mode) {
+    ZeroSites.prototype.setUrl = function(url, mode) {
       if (mode == null) {
         mode = "push";
       }
@@ -3287,7 +3286,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       return false;
     };
 
-    Play.prototype.handleLinkClick = function(e) {
+    ZeroSites.prototype.handleLinkClick = function(e) {
       if (e.which === 2) {
         return true;
       } else {
@@ -3310,7 +3309,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       }
     };
 
-    Play.prototype.createUrl = function(key, val) {
+    ZeroSites.prototype.createUrl = function(key, val) {
       var params, vals;
       params = JSON.parse(JSON.stringify(this.params));
       if (typeof key === "Object") {
@@ -3325,7 +3324,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       return "?" + Text.queryEncode(params);
     };
 
-    Play.prototype.loadLocalStorage = function() {
+    ZeroSites.prototype.loadLocalStorage = function() {
       return this.on_site_info.then((function(_this) {
         return function() {
           _this.log("Loading localstorage");
@@ -3345,7 +3344,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       })(this));
     };
 
-    Play.prototype.saveLocalStorage = function(cb) {
+    ZeroSites.prototype.saveLocalStorage = function(cb) {
       if (this.local_storage) {
         return this.cmd("wrapperSetLocalStorage", this.local_storage, (function(_this) {
           return function(res) {
@@ -3357,12 +3356,12 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       }
     };
 
-    Play.prototype.onOpenWebsocket = function(e) {
+    ZeroSites.prototype.onOpenWebsocket = function(e) {
       this.reloadSiteInfo();
       return this.reloadServerInfo();
     };
 
-    Play.prototype.reloadSiteInfo = function() {
+    ZeroSites.prototype.reloadSiteInfo = function() {
       return this.cmd("siteInfo", {}, (function(_this) {
         return function(site_info) {
           return _this.setSiteInfo(site_info);
@@ -3370,7 +3369,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       })(this));
     };
 
-    Play.prototype.reloadServerInfo = function() {
+    ZeroSites.prototype.reloadServerInfo = function() {
       return this.cmd("serverInfo", {}, (function(_this) {
         return function(server_info) {
           return _this.setServerInfo(server_info);
@@ -3378,7 +3377,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       })(this));
     };
 
-    Play.prototype.onRequest = function(cmd, params) {
+    ZeroSites.prototype.onRequest = function(cmd, params) {
       if (cmd === "setSiteInfo") {
         return this.setSiteInfo(params);
       } else if (cmd === "wrapperPopState") {
@@ -3397,7 +3396,7 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       }
     };
 
-    Play.prototype.setSiteInfo = function(site_info) {
+    ZeroSites.prototype.setSiteInfo = function(site_info) {
       this.site_info = site_info;
       this.on_site_info.resolve();
       this.site_lists.onSiteInfo(site_info);
@@ -3405,20 +3404,20 @@ function(a){a=e.string(a)?B(a)[0]:a;return{path:a,value:a.getTotalLength()}};l.r
       return this.projector.scheduleRender();
     };
 
-    Play.prototype.setServerInfo = function(server_info) {
+    ZeroSites.prototype.setServerInfo = function(server_info) {
       this.server_info = server_info;
       return this.projector.scheduleRender();
     };
 
-    Play.prototype.returnFalse = function() {
+    ZeroSites.prototype.returnFalse = function() {
       return false;
     };
 
-    return Play;
+    return ZeroSites;
 
   })(ZeroFrame);
 
-  window.Page = new Play();
+  window.Page = new ZeroSites();
 
   window.Page.createProjector();
 
