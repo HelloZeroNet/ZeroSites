@@ -40,7 +40,6 @@ class Site
 
 	saveRow: (cb) =>
 		user = new User(@row.directory)
-		debugger
 		user.getData (data) =>
 			data_row = row for row in data.site when row.site_id == @row.site_id
 			for key, val of @row
