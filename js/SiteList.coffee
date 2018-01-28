@@ -1,4 +1,4 @@
-class SiteList
+class SiteList extends Class
 	constructor: (@row) ->
 		@item_list = new ItemList(Site, "site_id")
 		@sites = @item_list.items
@@ -40,7 +40,9 @@ class SiteList
 	renderWide: (i) ->
 		cols = [0,1,2]
 		clear = false
-		limit = 10
+		limit = @limit
+		if @sites.length < limit * 3
+			limit = Math.ceil(@sites.length / 3)
 		h("div.sitelist-wide", [
 			cols.map (col) =>
 				h("div.sitelist.col-#{col}", {key: @row.id, classes: {empty: @sites.length == 0, hidden: @isHidden(), selected: Page.site_lists.filter_category == @row.id, clear: clear},}, [
