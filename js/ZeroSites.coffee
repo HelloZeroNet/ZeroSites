@@ -1,6 +1,6 @@
 window.h = maquette.h
 
-class Play extends ZeroFrame
+class ZeroSites extends ZeroFrame
 	init: ->
 		@params = {}
 		@site_info = null
@@ -161,6 +161,7 @@ class Play extends ZeroFrame
 		@on_site_info.resolve()
 		@site_lists.onSiteInfo(site_info)
 		@user.onSiteInfo(site_info)
+		@projector.scheduleRender()
 
 	setServerInfo: (server_info) ->
 		@server_info = server_info
