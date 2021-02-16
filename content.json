@@ -2,6 +2,7 @@
  "address": "1SiTEs2D3rCBxeMoLHXei2UYqFcxctdwB",
  "background-color": "#ECF1F5",
  "description": "Sites of ZeroNet",
+ "favicon": "favicon.png",
  "files": {
   "css/all.css": {
    "sha512": "940ccfdf626adc9e1e1c2641be122a4d0fabb5e4f206dd18365d7084fdd3238e",
